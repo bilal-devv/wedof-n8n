@@ -11,7 +11,7 @@ const getCf: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['certificationFolders'],
-				operation: ['get'],
+				operation: ['getCf'],
 			},
 		},
 		routing: {
@@ -26,7 +26,7 @@ const getCf: INodeProperties[] = [
 	}
 ];
 
-const getCfDocuments: INodeProperties[] = [
+const getCFDocuments: INodeProperties[] = [
 	{
 		displayName: 'Numéro du dossier de certification',
 		name: 'identifier',
@@ -119,7 +119,7 @@ const getAllCfsWithQueries: INodeProperties[] = [
 		description: 'Rechercher par nom, prénom, email, n° de dossier, n° de certification etc.',
 	},
 	{
-		displayName: 'Etat du dossier de formation',
+		displayName: 'État du dossier de formation',
 		name: 'registrationFolderState',
 		type: 'multiOptions',
 		displayOptions: {
@@ -1297,7 +1297,7 @@ const abort: INodeProperties[] = [
 	},
 ]
 
-const postTask: INodeProperties[] = [
+const postTaskCF: INodeProperties[] = [
 	{
 		displayName: 'Numéro du dossier de certification',
 		name: 'identifier',
@@ -1305,7 +1305,7 @@ const postTask: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['certificationFolders'],
-				operation: ['postTask'],
+				operation: ['postTaskCF'],
 			},
 		},
 		routing: {
@@ -1325,7 +1325,7 @@ const postTask: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['certificationFolders'],
-				operation: ['postTask'],
+				operation: ['postTaskCF'],
 			},
 		},
 		routing: {
@@ -1344,7 +1344,7 @@ const postTask: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['certificationFolders'],
-				operation: ['postTask'],
+				operation: ['postTaskCF'],
 			},
 		},
 		routing: {
@@ -1359,11 +1359,11 @@ const postTask: INodeProperties[] = [
 	{
 		displayName: 'Date de fin de la tâche',
 		name: 'eventEndTime',
-		type: 'dateTime',
+		type: 'hidden',
 		displayOptions: {
-			hide: {
+			show: {
 				resource: ['certificationFolders'],
-				operation: ['postTask'],
+				operation: ['postTaskCF'],
 			},
 		},
 		routing: {
@@ -1382,7 +1382,7 @@ const postTask: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['certificationFolders'],
-				operation: ['postTask'],
+				operation: ['postTaskCF'],
 			},
 		},
 		options: [
@@ -1412,7 +1412,7 @@ const postTask: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['certificationFolders'],
-				operation: ['postTask'],
+				operation: ['postTaskCF'],
 			},
 		},
 		options: [
@@ -1561,7 +1561,7 @@ const postTask: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['certificationFolders'],
-				operation: ['postTask'],
+				operation: ['postTaskCF'],
 			},
 		},
 		routing: {
@@ -1579,7 +1579,7 @@ const postTask: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['certificationFolders'],
-				operation: ['postTask'],
+				operation: ['postTaskCF'],
 			},
 		},
 		routing: {
@@ -1599,7 +1599,7 @@ const postTask: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['certificationFolders'],
-				operation: ['postTask'],
+				operation: ['postTaskCF'],
 			},
 		},
 		routing: {
@@ -1613,11 +1613,11 @@ const postTask: INodeProperties[] = [
 	{
 		displayName: 'Date de début de la tâche',
 		name: 'eventTime',
-		type: 'dateTime',
+		type: 'hidden',
 		displayOptions: {
-			hide: {
+			show: {
 				resource: ['certificationFolders'],
-				operation: ['postTask'],
+				operation: ['postTaskCF'],
 			},
 		},
 		routing: {
@@ -1632,11 +1632,11 @@ const postTask: INodeProperties[] = [
 	{
 		displayName: 'Source de donnée de la tâche (humaine ou non)',
 		name: 'origin',
-		type: 'string',
+		type: 'hidden',
 		displayOptions: {
-			hide: {
+			show: {
 				resource: ['certificationFolders'],
-				operation: ['postTask'],
+				operation: ['postTaskCF'],
 			},
 		},
 		routing: {
@@ -1650,7 +1650,7 @@ const postTask: INodeProperties[] = [
 	},
 ]
 
-const postActivity: INodeProperties[] = [
+const postActivityCF: INodeProperties[] = [
 	{
 		displayName: 'Numéro du dossier de certification',
 		name: 'identifier',
@@ -1658,7 +1658,7 @@ const postActivity: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['certificationFolders'],
-				operation: ['postActivity'],
+				operation: ['postActivityCF'],
 			},
 		},
 		routing: {
@@ -1678,7 +1678,7 @@ const postActivity: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['certificationFolders'],
-				operation: ['postActivity'],
+				operation: ['postActivityCF'],
 			},
 		},
 		routing: {
@@ -1697,7 +1697,7 @@ const postActivity: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['certificationFolders'],
-				operation: ['postTask'],
+				operation: ['postActivityCF'],
 			},
 		},
 		options: [
@@ -1727,7 +1727,7 @@ const postActivity: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['certificationFolders'],
-				operation: ['postTask'],
+				operation: ['postActivityCF'],
 			},
 		},
 		options: [
@@ -1876,7 +1876,7 @@ const postActivity: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['certificationFolders'],
-				operation: ['postTask'],
+				operation: ['postActivityCF'],
 			},
 		},
 		routing: {
@@ -1894,7 +1894,7 @@ const postActivity: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['certificationFolders'],
-				operation: ['postTask'],
+				operation: ['postActivityCF'],
 			},
 		},
 		routing: {
@@ -1914,7 +1914,7 @@ const postActivity: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['certificationFolders'],
-				operation: ['postTask'],
+				operation: ['postActivityCF'],
 			},
 		},
 		routing: {
@@ -1934,7 +1934,7 @@ const postActivity: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['certificationFolders'],
-				operation: ['postActivity'],
+				operation: ['postActivityCF'],
 			},
 		},
 		routing: {
@@ -1953,7 +1953,7 @@ const postActivity: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['certificationFolders'],
-				operation: ['postTask'],
+				operation: ['postActivityCF'],
 			},
 		},
 		routing: {
@@ -1967,11 +1967,12 @@ const postActivity: INodeProperties[] = [
 	{
 		displayName: 'Source de donnée de la tâche (humaine ou non)',
 		name: 'origin',
-		type: 'string',
+		type: 'hidden',
 		displayOptions: {
-			hide: {
+			show: {
 				resource: ['certificationFolders'],
-				operation: ['postTask'],
+				operation: ['postActivityCF'],
+
 			},
 		},
 		routing: {
@@ -1984,6 +1985,7 @@ const postActivity: INodeProperties[] = [
 		default: 'manual',
 	},
 ]
+
 export const certificationFoldersOperations: INodeProperties[] = [
 	{
 		displayName: 'Operation',
@@ -2000,7 +2002,7 @@ export const certificationFoldersOperations: INodeProperties[] = [
 		options: [
 			{
 				name: 'Récupérer un dossier de certification',
-				value: 'get',
+				value: 'getCf',
 				action: 'Récupérer un dossier de certification à partir de son n° de dossier'
 			},
 			{
@@ -2072,19 +2074,19 @@ export const certificationFoldersOperations: INodeProperties[] = [
 			},
 			{
 				name: 'Créer une tâche pour un dossier de certification',
-				value: 'postTask',
+				value: 'postTaskCF',
 				action: 'Créer une tâche pour un dossier de certification'
 			},
 			{
 				name: 'Créer une activité pour un dossier de certification',
-				value: 'postActivity',
+				value: 'postActivityCF',
 				action: 'Créer une activité pour un dossier de certification'
 			},
 		],
-		default: 'get',
+		default: 'getCf',
 	},
 	...getCf,
-	...getCfDocuments,
+	...getCFDocuments,
 	...getAllCfs,
 	...getAllCfsWithQueries,
 	...success,
@@ -2095,7 +2097,7 @@ export const certificationFoldersOperations: INodeProperties[] = [
 	...retake,
 	...control,
 	...abort,
-	...postTask,
-	...postActivity,
+	...postTaskCF,
+	...postActivityCF,
 ]
 

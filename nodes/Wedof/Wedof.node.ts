@@ -1,5 +1,5 @@
 	import { INodeType, INodeTypeDescription } from 'n8n-workflow';
-	import {certificationFoldersOperations} from "./WedofCertificationFolder";
+	import {certificationFoldersOperations} from "./WedofCertificationFolders";
 	export class Wedof implements INodeType {
 		description: INodeTypeDescription = {
 			// Basic node details will go here

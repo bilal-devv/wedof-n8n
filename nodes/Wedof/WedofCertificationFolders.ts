@@ -3,7 +3,7 @@ import type {
 } from 'n8n-workflow';
 
 
-const getCf: INodeProperties[] = [
+const getCF: INodeProperties[] = [
 	{
 		displayName: 'Numéro du dossier de certification',
 		name: 'identifier',
@@ -11,7 +11,7 @@ const getCf: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['certificationFolders'],
-				operation: ['getCf'],
+				operation: ['getCF'],
 			},
 		},
 		routing: {
@@ -49,7 +49,7 @@ const getCFDocuments: INodeProperties[] = [
 	}
 ];
 
-const getAllCfs: INodeProperties[] = [
+const getAllCFs: INodeProperties[] = [
 	{
 		displayName: 'Limit',
 		name: 'limit',
@@ -57,7 +57,7 @@ const getAllCfs: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['certificationFolders'],
-				operation: ['getAllCf'],
+				operation: ['getAllCF'],
 			},
 		},
 		routing: {
@@ -80,7 +80,7 @@ const getAllCfs: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['certificationFolders'],
-				operation: ['getAllCf'],
+				operation: ['getAllCF'],
 			},
 		},
 		routing: {
@@ -98,7 +98,7 @@ const getAllCfs: INodeProperties[] = [
 	},
 ];
 
-const getAllCfsWithQueries: INodeProperties[] = [
+const getAllCFsWithQueries: INodeProperties[] = [
 	{
 		displayName: 'Recherche',
 		name: 'recherche',
@@ -106,7 +106,7 @@ const getAllCfsWithQueries: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['certificationFolders'],
-				operation: ['getAllCfsWithQueries'],
+				operation: ['getAllCFsWithQueries'],
 			},
 		},
 		routing: {
@@ -125,7 +125,7 @@ const getAllCfsWithQueries: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['certificationFolders'],
-				operation: ['getAllCfsWithQueries'],
+				operation: ['getAllCFsWithQueries'],
 			},
 		},
 		options: [
@@ -164,7 +164,7 @@ const getAllCfsWithQueries: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['certificationFolders'],
-				operation: ['getAllCfsWithQueries'],
+				operation: ['getAllCFsWithQueries'],
 			},
 		},
 		options: [
@@ -197,7 +197,7 @@ const getAllCfsWithQueries: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['certificationFolders'],
-				operation: ['getAllCfsWithQueries'],
+				operation: ['getAllCFsWithQueries'],
 			},
 		},
 		options: [
@@ -238,7 +238,7 @@ const getAllCfsWithQueries: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['certificationFolders'],
-				operation: ['getAllCfsWithQueries'],
+				operation: ['getAllCFsWithQueries'],
 			},
 		},
 		options: [
@@ -263,7 +263,7 @@ const getAllCfsWithQueries: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['certificationFolders'],
-				operation: ['getAllCfsWithQueries'],
+				operation: ['getAllCFsWithQueries'],
 			},
 		},
 		options: [
@@ -286,7 +286,7 @@ const getAllCfsWithQueries: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['certificationFolders'],
-				operation: ['getAllCfsWithQueries'],
+				operation: ['getAllCFsWithQueries'],
 			},
 		},
 		options: [
@@ -314,7 +314,7 @@ const getAllCfsWithQueries: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['certificationFolders'],
-				operation: ['getAllCfsWithQueries'],
+				operation: ['getAllCFsWithQueries'],
 			},
 		},
 		routing: {
@@ -334,7 +334,7 @@ const getAllCfsWithQueries: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['certificationFolders'],
-				operation: ['getAllCfsWithQueries'],
+				operation: ['getAllCFsWithQueries'],
 			},
 		},
 		routing: {
@@ -353,7 +353,7 @@ const getAllCfsWithQueries: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['certificationFolders'],
-				operation: ['getAllCfsWithQueries'],
+				operation: ['getAllCFsWithQueries'],
 			},
 		},
 		routing: {
@@ -372,7 +372,7 @@ const getAllCfsWithQueries: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['certificationFolders'],
-				operation: ['getAllCfsWithQueries'],
+				operation: ['getAllCFsWithQueries'],
 			},
 		},
 		routing: {
@@ -395,7 +395,7 @@ const getAllCfsWithQueries: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['certificationFolders'],
-				operation: ['getAllCfsWithQueries'],
+				operation: ['getAllCFsWithQueries'],
 			},
 		},
 		routing: {
@@ -411,6 +411,29 @@ const getAllCfsWithQueries: INodeProperties[] = [
 		default: 1,
 		description: 'Numéro de page de la requête - par défaut la première.',
 	},
+];
+
+const getCFActivitiesTask: INodeProperties[] = [
+	{
+		displayName: 'Numéro du dossier de certification',
+		name: 'identifier',
+		type: 'string',
+		displayOptions: {
+			show: {
+				resource: ['certificationFolders'],
+				operation: ['getCFActivitiesTask'],
+			},
+		},
+		routing: {
+			request: {
+				method: 'GET',
+				url: '=/activities/CertificationFolder/{{$value}}/',
+			},
+		},
+		required: true,
+		default: '',
+		description: 'Le numéro du dossier est l\'id',
+	}
 ];
 
 const success: INodeProperties[] = [
@@ -1311,7 +1334,7 @@ const postTaskCF: INodeProperties[] = [
 		routing: {
 			request: {
 				method: 'POST',
-				url: '=/certificationFolders/certificationFolders/{{$value}}',
+				url: '=/certificationFolders/CertificationFolder/{{$value}}',
 			},
 		},
 		required: true,
@@ -1664,7 +1687,7 @@ const postActivityCF: INodeProperties[] = [
 		routing: {
 			request: {
 				method: 'POST',
-				url: '=/certificationFolders/certificationFolders/{{$value}}',
+				url: '=/certificationFolders/CertificationFolder/{{$value}}',
 			},
 		},
 		required: true,
@@ -2002,7 +2025,7 @@ export const certificationFoldersOperations: INodeProperties[] = [
 		options: [
 			{
 				name: 'Récupérer un dossier de certification',
-				value: 'getCf',
+				value: 'getCF',
 				action: 'Récupérer un dossier de certification à partir de son n° de dossier'
 			},
 			{
@@ -2012,7 +2035,7 @@ export const certificationFoldersOperations: INodeProperties[] = [
 			},
 			{
 				name: 'Liste des dossiers de certification',
-				value: 'getAllCf',
+				value: 'getAllCF',
 				action: 'Liste les dossiers de certification lié à l\'organisme\n',
 				routing: {
 					request: {
@@ -2023,7 +2046,7 @@ export const certificationFoldersOperations: INodeProperties[] = [
 			},
 			{
 				name: 'Rechercher un ou plusieurs dossier de certification',
-				value: 'getAllCfsWithQueries',
+				value: 'getAllCFsWithQueries',
 				action: 'Liste les dossiers de certification en fonction des critères sélectionnés',
 				routing: {
 					request: {
@@ -2031,6 +2054,11 @@ export const certificationFoldersOperations: INodeProperties[] = [
 						url: '=/certificationFolders',
 					},
 				},
+			},
+			{
+				name: 'Liste de toutes les activités et tâches d\'un dossier de certification',
+				value: 'getCFActivitiesTask',
+				action: 'Récupère l\'ensemble des activités et tâches liées à un dossier de certification'
 			},
 			{
 				name: 'Passer un dossier de certification à l’état : réussi',
@@ -2083,12 +2111,13 @@ export const certificationFoldersOperations: INodeProperties[] = [
 				action: 'Créer une activité pour un dossier de certification'
 			},
 		],
-		default: 'getCf',
+		default: 'getCF',
 	},
-	...getCf,
+	...getCF,
 	...getCFDocuments,
-	...getAllCfs,
-	...getAllCfsWithQueries,
+	...getAllCFs,
+	...getAllCFsWithQueries,
+	...getCFActivitiesTask,
 	...success,
 	...refuse,
 	...take,

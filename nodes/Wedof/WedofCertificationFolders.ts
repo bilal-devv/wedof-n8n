@@ -413,7 +413,7 @@ const getAllCFsWithQueries: INodeProperties[] = [
 	},
 ];
 
-const getCFActivitiesTask: INodeProperties[] = [
+const getCFActivitiesTasks: INodeProperties[] = [
 	{
 		displayName: 'Numéro du dossier de certification',
 		name: 'identifier',
@@ -421,7 +421,7 @@ const getCFActivitiesTask: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['certificationFolders'],
-				operation: ['getCFActivitiesTask'],
+				operation: ['getCFActivitiesTasks'],
 			},
 		},
 		routing: {
@@ -1320,6 +1320,374 @@ const abort: INodeProperties[] = [
 	},
 ]
 
+const updateCF: INodeProperties[] = [
+	{
+		displayName: 'Numéro du dossier de certification',
+		name: 'identifier',
+		type: 'string',
+		displayOptions: {
+			show: {
+				resource: ['certificationFolders'],
+				operation: ['updateCF'],
+			},
+		},
+		routing: {
+			request: {
+				method: 'PUT',
+				url: '=/certificationFolders/CertificationFolder',
+			},
+		},
+		required: true,
+		default: '',
+		description: 'Le numéro du dossier est l\'id',
+	},
+	{
+		displayName: 'Date de début de l\'examen',
+		name: 'examinationDate',
+		type: 'dateTime',
+		displayOptions: {
+			show: {
+				resource: ['certificationFolders'],
+				operation: ['updateCF'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'examinationDate',
+				value: "={{$value}}"
+			},
+		},
+		default: null,
+	},
+	{
+		displayName: 'Date de fin de l\'examen',
+		name: 'examinationEndDate',
+		type: 'dateTime',
+		displayOptions: {
+			show: {
+				resource: ['certificationFolders'],
+				operation: ['updateCF'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'examinationEndDate',
+				value: "={{$value}}"
+			},
+		},
+		default: null,
+	},
+	{
+		displayName: 'Date d\'inscription à la certification',
+		name: 'enrollmentDate',
+		type: 'dateTime',
+		displayOptions: {
+			show: {
+				resource: ['certificationFolders'],
+				operation: ['updateCF'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'enrollmentDate',
+				value: "={{$value}}"
+			},
+		},
+		default: null,
+	},
+	{
+		displayName: 'Lieu de passage de l\'examin',
+		name: 'examinationPlace',
+		type: 'string',
+		displayOptions: {
+			show: {
+				resource: ['certificationFolders'],
+				operation: ['updateCF'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'examinationPlace',
+			},
+		},
+		default: null,
+		description: 'Peut être modifié dans les états de certifications "registered/enregistré", "toTake/prêt à passer", "toControl/ à contrôler", "toRetake/prêt à repasser" | peut-être mis à jour par le certificateur et le partenaire'
+	},
+	{
+		displayName: 'Code postal du centre d\'examen principal qui a assuré la certification',
+		name: 'examinationCenterZipCode',
+		type: 'string',
+		displayOptions: {
+			show: {
+				resource: ['certificationFolders'],
+				operation: ['updateCF'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'examinationCenterZipCode',
+			},
+		},
+		default: '',
+		description: 'Peut être modifié dans tous les états sauf dans l\'état "success/réussis" | peut-être mis à jour par le certificateur uniquement'
+	},
+	{
+		displayName: 'Modalité de l\'examin',
+		name: 'examinationType',
+		type: 'options',
+		displayOptions: {
+			show: {
+				resource: ['certificationFolders'],
+				operation: ['control'],
+			},
+		},
+		options: [
+			{name: "À distance", value: "A_DISTANCE"},
+			{name: "En présentiel", value: "EN_PRESENTIEL"},
+			{name: "Mixte (à distance et en présentiel)", value: "MIXTE"},
+		],
+		routing: {
+			send: {
+				type: 'body',
+				property: 'examinationType',
+				value: '={{$value}}'
+			},
+		},
+		default: null,
+		description: 'Peut être modifié dans les états de certifications "registered/enregistré", "toTake/prêt à passer", "toControl/ à contrôler", "toRetake/prêt à repasser" | peut-être mis à jour par le certificateur et le partenaire'
+	},
+	{
+		displayName: 'Information complémentaire sur la certification',
+		name: 'verbatim',
+		type: 'string',
+		displayOptions: {
+			show: {
+				resource: ['certificationFolders'],
+				operation: ['updateCF'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'verbatim',
+			},
+		},
+		default: '',
+		description: 'Peut être modifié dans tous les états sauf dans l\'état "success/réussis" | peut-être mis à jour par le certificateur uniquement'
+	},
+	{
+		displayName: 'Option si appliquée',
+		name: 'optionName',
+		type: 'string',
+		displayOptions: {
+			show: {
+				resource: ['certificationFolders'],
+				operation: ['updateCF'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'control',
+			},
+		},
+		default: '',
+		description: 'Peut être modifié dans tous les états sauf dans l\'état "success/réussis" | peut-être mis à jour par le certificateur uniquement'
+	},
+	{
+		displayName: 'Mention obtenue',
+		name: 'accessModality',
+		type: 'options',
+		displayOptions: {
+			show: {
+				resource: ['certificationFolders'],
+				operation: ['control'],
+			},
+		},
+		options: [
+			{name: "À distance", value: "A_DISTANCE"},
+			{name: "En présentiel", value: "EN_PRESENTIEL"},
+			{name: "Mixte (à distance et en présentiel)", value: "MIXTE"},
+		],
+		routing: {
+			send: {
+				type: 'body',
+				property: 'examinationType',
+				value: '={{$value}}'
+			},
+		},
+		default: null,
+	},
+	{
+		displayName: 'Mention obtenue',
+		name: 'accessModality',
+		type: 'options',
+		displayOptions: {
+			show: {
+				resource: ['certificationFolders'],
+				operation: ['control'],
+			},
+		},
+		options: [
+			{name: "À distance", value: "A_DISTANCE"},
+			{name: "En présentiel", value: "EN_PRESENTIEL"},
+			{name: "Mixte (à distance et en présentiel)", value: "MIXTE"},
+		],
+		routing: {
+			send: {
+				type: 'body',
+				property: 'examinationType',
+				value: '={{$value}}'
+			},
+		},
+		default: null,
+	},
+	{
+		displayName: 'Commentaire',
+		name: 'comment',
+		type: 'string',
+		displayOptions: {
+			show: {
+				resource: ['certificationFolders'],
+				operation: ['abort'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'comment',
+			},
+		},
+		default: '',
+	},
+	{
+		displayName: 'Financement',
+		name: 'type',
+		type: 'multiOptions',
+		displayOptions: {
+			show: {
+				resource: ['registrationFolders'],
+				operation: ['getAllRFWithQueries'],
+			},
+		},
+		options: [
+			{name: "Tous", value: "all"},
+			{name: "CPF", value: "cpf"},
+			{name: "Kairos (AIF)", value: "kairosAif"},
+			{name: "OPCO", value: "opco"},
+			{name: "Entreprise", value: "company"},
+			{name: "Autofinancement", value: "individual"},
+			{name: "Pôle Emploi (Autres)", value: "poleEmploi"},
+		],
+		routing: {
+			send: {
+				type: 'query',
+				property: 'type',
+				value: "={{$value.join(',')}}"
+			},
+		},
+		default: ['all'],
+		description: 'Permet de n\'obtenir que les dossiers dans le type considéré - par défaut tous les types sont retournés.',
+	},
+	{
+		displayName: 'Commentaire',
+		name: 'tags',
+		type: 'string',
+		displayOptions: {
+			show: {
+				resource: ['certificationFolders'],
+				operation: ['abort'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'comment',
+			},
+		},
+		default: '',
+	},
+	/*
+{
+	displayName: 'Exclus de l\'accrochage',
+	name: 'cdcExcluded',
+	type: 'boolean',
+	displayOptions: {
+		show: {
+			resource: ['certificationFolders'],
+			operation: ['getAllCFsWithQueries'],
+		},
+	},
+	routing: {
+		send: {
+			type: 'query',
+			property: 'cdcExcluded',
+		},
+	},
+	default: '',
+	description: 'Permet de filtrer les dossiers de certification qui sont exclus de l\'accrochage',
+},*/
+	{
+		displayName: 'Commentaire',
+		name: 'amountHt',
+		type: 'number',
+		displayOptions: {
+			show: {
+				resource: ['certificationFolders'],
+				operation: ['control'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'control',
+			},
+		},
+		default: '',
+	},
+	{
+		displayName: 'Commentaire',
+		name: 'certificate',
+		type: 'string',
+		displayOptions: {
+			show: {
+				resource: ['certificationFolders'],
+				operation: ['control'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'control',
+			},
+		},
+		default: '',
+	},
+	{
+		displayName: 'Commentaire',
+		name: 'certificateId',
+		type: 'string',
+		displayOptions: {
+			show: {
+				resource: ['certificationFolders'],
+				operation: ['control'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'control',
+			},
+		},
+		default: '',
+	},
+]
+
 const postTaskCF: INodeProperties[] = [
 	{
 		displayName: 'Numéro du dossier de certification',
@@ -2057,8 +2425,13 @@ export const certificationFoldersOperations: INodeProperties[] = [
 			},
 			{
 				name: 'Liste de toutes les activités et tâches d\'un dossier de certification',
-				value: 'getCFActivitiesTask',
+				value: 'getCFActivitiesTasks',
 				action: 'Récupère l\'ensemble des activités et tâches liées à un dossier de certification'
+			},
+			{
+				name: 'Mettre à jour un dossier de certification',
+				value: 'updateCF',
+				action: 'Met à jour certaines informations modifiable d\'un dossier de certification'
 			},
 			{
 				name: 'Passer un dossier de certification à l’état : réussi',
@@ -2117,7 +2490,8 @@ export const certificationFoldersOperations: INodeProperties[] = [
 	...getCFDocuments,
 	...getAllCFs,
 	...getAllCFsWithQueries,
-	...getCFActivitiesTask,
+	...getCFActivitiesTasks,
+	...updateCF,
 	...success,
 	...refuse,
 	...take,

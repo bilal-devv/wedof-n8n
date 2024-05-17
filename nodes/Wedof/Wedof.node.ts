@@ -1,5 +1,6 @@
 	import { INodeType, INodeTypeDescription } from 'n8n-workflow';
 	import {certificationFoldersOperations} from "./WedofCertificationFolders";
+	import {registrationFoldersOperations} from "./WedofRegistrationFolders";
 	export class Wedof implements INodeType {
 		description: INodeTypeDescription = {
 			// Basic node details will go here
@@ -40,11 +41,16 @@
 							name: 'Dossier de certifications',
 							value: 'certificationFolders',
 						},
+						{
+							name: 'Dossier de formations',
+							value: 'registrationFolders',
+						},
 					],
-					default: 'certificationFolders',
+					default: 'registrationFolders',
 				},
 				// Method goes here
 				...certificationFoldersOperations,
+				...registrationFoldersOperations
 			]
 		};
 	}

@@ -91,7 +91,6 @@ const getAllCFs: INodeProperties[] = [
 		},
 		typeOptions: {
 			minValue: 1,
-			maxValue: 1000,
 		},
 		default: '',
 		description: 'Page',
@@ -306,46 +305,56 @@ const getAllCFsWithQueries: INodeProperties[] = [
 		default: ['all'],
 		description: 'Permet d\'indiquer où en est le dossier de certification dans le processus d\'accrochage auprès de la CDC',
 	},
-	/*
 	{
 		displayName: 'Exclus de l\'accrochage',
 		name: 'cdcExcluded',
-		type: 'boolean',
+		type: 'options',
 		displayOptions: {
 			show: {
 				resource: ['certificationFolders'],
 				operation: ['getAllCFsWithQueries'],
 			},
 		},
+		options: [
+			{name: "Tous", value: "all"},
+			{name: "Oui", value: true},
+			{name: "Non", value: false}
+		],
 		routing: {
 			send: {
 				type: 'query',
 				property: 'cdcExcluded',
+				value : '={{ $value !== \'all\' ? $value : undefined }}'
 			},
 		},
-		default: '',
+		default: 'all',
 		description: 'Permet de filtrer les dossiers de certification qui sont exclus de l\'accrochage',
-	},*/
-	/*
+	},
 	{
-		displayName: 'Donnés apprenant complètes',
+		displayName: 'Données apprenant complètes',
 		name: 'cdcCompliant',
-		type: 'boolean',
+		type: 'options',
 		displayOptions: {
 			show: {
 				resource: ['certificationFolders'],
 				operation: ['getAllCFsWithQueries'],
 			},
 		},
+		options: [
+			{name: "Tous", value: "all"},
+			{name: "Oui", value: true},
+			{name: "Non", value: false}
+		],
 		routing: {
 			send: {
 				type: 'query',
 				property: 'cdcCompliant',
+				value : '={{ $value !== \'all\' ? $value : undefined }}'
 			},
 		},
-		default: '',
+		default: 'all',
 		description: 'Permet de filtrer les dossiers de certification selon le fait qu\'ils contiennent les données de l\'apprenant obligatoires pour l\'accrochage en cas d\'obtention de la certification',
-	},*/
+	},
 	{
 		displayName: 'Inclus dans les prochains accrochages',
 		name: 'cdcToExport',
@@ -406,7 +415,6 @@ const getAllCFsWithQueries: INodeProperties[] = [
 		},
 		typeOptions: {
 			minValue: 1,
-			maxValue: 1000,
 		},
 		default: 1,
 		description: 'Numéro de page de la requête - par défaut la première.',
@@ -556,7 +564,7 @@ const success: INodeProperties[] = [
 				property: 'gradePass',
 			},
 		},
-		default: null,
+		default: '',
 	},
 	{
 		displayName: 'Nomenclature européeenne pour les certifications de langues',
@@ -583,7 +591,7 @@ const success: INodeProperties[] = [
 				property: 'europeanLanguageLevel',
 			},
 		},
-		default: null,
+		default: '',
 	},
 ]
 
@@ -666,7 +674,7 @@ const take: INodeProperties[] = [
 				value: "={{$value}}"
 			},
 		},
-		default: null,
+		default: '',
 	},
 	{
 		displayName: 'Date de fin de l\'examen',
@@ -685,7 +693,7 @@ const take: INodeProperties[] = [
 				value: "={{$value}}"
 			},
 		},
-		default: null,
+		default: '',
 	},
 	{
 		displayName: 'Lieu de passage de l\'examin',
@@ -703,7 +711,7 @@ const take: INodeProperties[] = [
 				property: 'examinationPlace',
 			},
 		},
-		default: null,
+		default: '',
 		description: 'Le numéro du dossier est l\'id',
 	},
 	{
@@ -728,7 +736,7 @@ const take: INodeProperties[] = [
 				value: '={{$value}}'
 			},
 		},
-		default: null,
+		default: '',
 	},
 	{
 		displayName: 'Date d\'inscription à la certification',
@@ -747,7 +755,7 @@ const take: INodeProperties[] = [
 				value: "={{$value}}"
 			},
 		},
-		default: null,
+		default: '',
 	},
 	{
 		displayName: 'Commentaire',
@@ -807,7 +815,7 @@ const register: INodeProperties[] = [
 				value: "={{$value}}"
 			},
 		},
-		default: null,
+		default: '',
 	},
 	{
 		displayName: 'Date de fin de l\'examen',
@@ -826,7 +834,7 @@ const register: INodeProperties[] = [
 				value: "={{$value}}"
 			},
 		},
-		default: null,
+		default: '',
 	},
 	{
 		displayName: 'Lieu de passage de l\'examin',
@@ -844,7 +852,7 @@ const register: INodeProperties[] = [
 				property: 'examinationPlace',
 			},
 		},
-		default: null,
+		default: '',
 		description: 'Le numéro du dossier est l\'id',
 	},
 	{
@@ -869,7 +877,7 @@ const register: INodeProperties[] = [
 				value: '={{$value}}'
 			},
 		},
-		default: null,
+		default: '',
 	},
 	{
 		displayName: 'Date d\'inscription à la certification',
@@ -888,7 +896,7 @@ const register: INodeProperties[] = [
 				value: "={{$value}}"
 			},
 		},
-		default: null,
+		default: '',
 	},
 	{
 		displayName: 'Commentaire',
@@ -993,7 +1001,7 @@ const fail: INodeProperties[] = [
 				property: 'europeanLanguageLevel',
 			},
 		},
-		default: null,
+		default: '',
 	},
 ]
 
@@ -1035,7 +1043,7 @@ const retake: INodeProperties[] = [
 				value: "={{$value}}"
 			},
 		},
-		default: null,
+		default: '',
 	},
 	{
 		displayName: 'Date de fin de l\'examen',
@@ -1054,7 +1062,7 @@ const retake: INodeProperties[] = [
 				value: "={{$value}}"
 			},
 		},
-		default: null,
+		default: '',
 	},
 	{
 		displayName: 'Lieu de passage de l\'examin',
@@ -1072,7 +1080,7 @@ const retake: INodeProperties[] = [
 				property: 'examinationPlace',
 			},
 		},
-		default: null,
+		default: '',
 		description: 'Le numéro du dossier est l\'id',
 	},
 	{
@@ -1097,7 +1105,7 @@ const retake: INodeProperties[] = [
 				value: '={{$value}}'
 			},
 		},
-		default: null,
+		default: '',
 	},
 	{
 		displayName: 'Date d\'inscription à la certification',
@@ -1116,7 +1124,7 @@ const retake: INodeProperties[] = [
 				value: "={{$value}}"
 			},
 		},
-		default: null,
+		default: '',
 	},
 	{
 		displayName: 'Commentaire',
@@ -1176,7 +1184,7 @@ const control: INodeProperties[] = [
 				value: "={{$value}}"
 			},
 		},
-		default: null,
+		default: '',
 	},
 	{
 		displayName: 'Date de fin de l\'examen',
@@ -1195,7 +1203,7 @@ const control: INodeProperties[] = [
 				value: "={{$value}}"
 			},
 		},
-		default: null,
+		default: '',
 	},
 	{
 		displayName: 'Lieu de passage de l\'examin',
@@ -1213,7 +1221,7 @@ const control: INodeProperties[] = [
 				property: 'examinationPlace',
 			},
 		},
-		default: null,
+		default: '',
 		description: 'Le numéro du dossier est l\'id',
 	},
 	{
@@ -1238,7 +1246,7 @@ const control: INodeProperties[] = [
 				value: '={{$value}}'
 			},
 		},
-		default: null,
+		default: '',
 	},
 	{
 		displayName: 'Date d\'inscription à la certification',
@@ -1257,7 +1265,7 @@ const control: INodeProperties[] = [
 				value: "={{$value}}"
 			},
 		},
-		default: null,
+		default: '',
 	},
 	{
 		displayName: 'Commentaire',
@@ -1342,6 +1350,33 @@ const updateCF: INodeProperties[] = [
 		description: 'Le numéro du dossier est l\'id',
 	},
 	{
+		displayName: 'Dossier à l\'initiative de',
+		name: 'type',
+		type: 'options',
+		displayOptions: {
+			show: {
+				resource: ['registrationFolders'],
+				operation: ['updateCF'],
+			},
+		},
+		options: [
+			{name: "Certifié(e)", value: "certifie"},
+			{name: "Organisme de formation", value: "of"},
+			{name: "Pôle Emploi", value: "pole_emploi"},
+			{name: "Employeur", value: "employeur"},
+			{name: "Autre", value: "autre"}
+		],
+		routing: {
+			send: {
+				type: 'query',
+				property: 'type',
+				value: "={{$value.join(',')}}"
+			},
+		},
+		default: '',
+		description: 'Permet de n\'obtenir que les dossiers dans le type considéré - par défaut tous les types sont retournés.',
+	},
+	{
 		displayName: 'Date de début de l\'examen',
 		name: 'examinationDate',
 		type: 'dateTime',
@@ -1358,7 +1393,7 @@ const updateCF: INodeProperties[] = [
 				value: "={{$value}}"
 			},
 		},
-		default: null,
+		default: '',
 	},
 	{
 		displayName: 'Date de fin de l\'examen',
@@ -1377,7 +1412,7 @@ const updateCF: INodeProperties[] = [
 				value: "={{$value}}"
 			},
 		},
-		default: null,
+		default: '',
 	},
 	{
 		displayName: 'Date d\'inscription à la certification',
@@ -1396,10 +1431,10 @@ const updateCF: INodeProperties[] = [
 				value: "={{$value}}"
 			},
 		},
-		default: null,
+		default: '',
 	},
 	{
-		displayName: 'Lieu de passage de l\'examin',
+		displayName: 'Lieu de passage de l\'examen',
 		name: 'examinationPlace',
 		type: 'string',
 		displayOptions: {
@@ -1414,36 +1449,17 @@ const updateCF: INodeProperties[] = [
 				property: 'examinationPlace',
 			},
 		},
-		default: null,
+		default: '',
 		description: 'Peut être modifié dans les états de certifications "registered/enregistré", "toTake/prêt à passer", "toControl/ à contrôler", "toRetake/prêt à repasser" | peut-être mis à jour par le certificateur et le partenaire'
 	},
 	{
-		displayName: 'Code postal du centre d\'examen principal qui a assuré la certification',
-		name: 'examinationCenterZipCode',
-		type: 'string',
-		displayOptions: {
-			show: {
-				resource: ['certificationFolders'],
-				operation: ['updateCF'],
-			},
-		},
-		routing: {
-			send: {
-				type: 'body',
-				property: 'examinationCenterZipCode',
-			},
-		},
-		default: '',
-		description: 'Peut être modifié dans tous les états sauf dans l\'état "success/réussis" | peut-être mis à jour par le certificateur uniquement'
-	},
-	{
-		displayName: 'Modalité de l\'examin',
+		displayName: 'Modalité de l\'examen',
 		name: 'examinationType',
 		type: 'options',
 		displayOptions: {
 			show: {
 				resource: ['certificationFolders'],
-				operation: ['control'],
+				operation: ['updateCF'],
 			},
 		},
 		options: [
@@ -1458,94 +1474,8 @@ const updateCF: INodeProperties[] = [
 				value: '={{$value}}'
 			},
 		},
-		default: null,
+		default: '',
 		description: 'Peut être modifié dans les états de certifications "registered/enregistré", "toTake/prêt à passer", "toControl/ à contrôler", "toRetake/prêt à repasser" | peut-être mis à jour par le certificateur et le partenaire'
-	},
-	{
-		displayName: 'Information complémentaire sur la certification',
-		name: 'verbatim',
-		type: 'string',
-		displayOptions: {
-			show: {
-				resource: ['certificationFolders'],
-				operation: ['updateCF'],
-			},
-		},
-		routing: {
-			send: {
-				type: 'body',
-				property: 'verbatim',
-			},
-		},
-		default: '',
-		description: 'Peut être modifié dans tous les états sauf dans l\'état "success/réussis" | peut-être mis à jour par le certificateur uniquement'
-	},
-	{
-		displayName: 'Option si appliquée',
-		name: 'optionName',
-		type: 'string',
-		displayOptions: {
-			show: {
-				resource: ['certificationFolders'],
-				operation: ['updateCF'],
-			},
-		},
-		routing: {
-			send: {
-				type: 'body',
-				property: 'control',
-			},
-		},
-		default: '',
-		description: 'Peut être modifié dans tous les états sauf dans l\'état "success/réussis" | peut-être mis à jour par le certificateur uniquement'
-	},
-	{
-		displayName: 'Mention obtenue',
-		name: 'accessModality',
-		type: 'options',
-		displayOptions: {
-			show: {
-				resource: ['certificationFolders'],
-				operation: ['control'],
-			},
-		},
-		options: [
-			{name: "À distance", value: "A_DISTANCE"},
-			{name: "En présentiel", value: "EN_PRESENTIEL"},
-			{name: "Mixte (à distance et en présentiel)", value: "MIXTE"},
-		],
-		routing: {
-			send: {
-				type: 'body',
-				property: 'examinationType',
-				value: '={{$value}}'
-			},
-		},
-		default: null,
-	},
-	{
-		displayName: 'Mention obtenue',
-		name: 'accessModality',
-		type: 'options',
-		displayOptions: {
-			show: {
-				resource: ['certificationFolders'],
-				operation: ['control'],
-			},
-		},
-		options: [
-			{name: "À distance", value: "A_DISTANCE"},
-			{name: "En présentiel", value: "EN_PRESENTIEL"},
-			{name: "Mixte (à distance et en présentiel)", value: "MIXTE"},
-		],
-		routing: {
-			send: {
-				type: 'body',
-				property: 'examinationType',
-				value: '={{$value}}'
-			},
-		},
-		default: null,
 	},
 	{
 		displayName: 'Commentaire',
@@ -1566,35 +1496,6 @@ const updateCF: INodeProperties[] = [
 		default: '',
 	},
 	{
-		displayName: 'Financement',
-		name: 'type',
-		type: 'multiOptions',
-		displayOptions: {
-			show: {
-				resource: ['registrationFolders'],
-				operation: ['getAllRFWithQueries'],
-			},
-		},
-		options: [
-			{name: "Tous", value: "all"},
-			{name: "CPF", value: "cpf"},
-			{name: "Kairos (AIF)", value: "kairosAif"},
-			{name: "OPCO", value: "opco"},
-			{name: "Entreprise", value: "company"},
-			{name: "Autofinancement", value: "individual"},
-			{name: "Pôle Emploi (Autres)", value: "poleEmploi"},
-		],
-		routing: {
-			send: {
-				type: 'query',
-				property: 'type',
-				value: "={{$value.join(',')}}"
-			},
-		},
-		default: ['all'],
-		description: 'Permet de n\'obtenir que les dossiers dans le type considéré - par défaut tous les types sont retournés.',
-	},
-	{
 		displayName: 'Commentaire',
 		name: 'tags',
 		type: 'string',
@@ -1612,8 +1513,7 @@ const updateCF: INodeProperties[] = [
 		},
 		default: '',
 	},
-	/*
-{
+	{
 	displayName: 'Exclus de l\'accrochage',
 	name: 'cdcExcluded',
 	type: 'boolean',
@@ -1631,7 +1531,7 @@ const updateCF: INodeProperties[] = [
 	},
 	default: '',
 	description: 'Permet de filtrer les dossiers de certification qui sont exclus de l\'accrochage',
-},*/
+},
 	{
 		displayName: 'Commentaire',
 		name: 'amountHt',
@@ -1649,43 +1549,7 @@ const updateCF: INodeProperties[] = [
 			},
 		},
 		default: '',
-	},
-	{
-		displayName: 'Commentaire',
-		name: 'certificate',
-		type: 'string',
-		displayOptions: {
-			show: {
-				resource: ['certificationFolders'],
-				operation: ['control'],
-			},
-		},
-		routing: {
-			send: {
-				type: 'body',
-				property: 'control',
-			},
-		},
-		default: '',
-	},
-	{
-		displayName: 'Commentaire',
-		name: 'certificateId',
-		type: 'string',
-		displayOptions: {
-			show: {
-				resource: ['certificationFolders'],
-				operation: ['control'],
-			},
-		},
-		routing: {
-			send: {
-				type: 'body',
-				property: 'control',
-			},
-		},
-		default: '',
-	},
+	}
 ]
 
 const postTaskCF: INodeProperties[] = [
@@ -1745,7 +1609,7 @@ const postTaskCF: INodeProperties[] = [
 				value: "={{$value}}"
 			},
 		},
-		default: null,
+		default: '',
 	},
 	{
 		displayName: 'Date de fin de la tâche',
@@ -1764,7 +1628,7 @@ const postTaskCF: INodeProperties[] = [
 				value: "={{$value}}"
 			},
 		},
-		default: null,
+		default: '',
 	},
 	{
 		displayName: 'Type',
@@ -1794,7 +1658,7 @@ const postTaskCF: INodeProperties[] = [
 			},
 		},
 		required: true,
-		default: null,
+		default: '',
 	},
 	{
 		displayName: 'Associée à Qualiopi',
@@ -1943,7 +1807,7 @@ const postTaskCF: INodeProperties[] = [
 				value: "={{$value}}"
 			},
 		},
-		default: null,
+		default: '',
 	},
 	{
 		displayName: 'Description',
@@ -2018,7 +1882,7 @@ const postTaskCF: INodeProperties[] = [
 				value: "={{$value}}"
 			},
 		},
-		default: null,
+		default: '',
 	},
 	{
 		displayName: 'Source de donnée de la tâche (humaine ou non)',
@@ -2109,7 +1973,7 @@ const postActivityCF: INodeProperties[] = [
 			},
 		},
 		required: true,
-		default: null,
+		default: '',
 	},
 	{
 		displayName: 'Associée à Qualiopi',
@@ -2258,7 +2122,7 @@ const postActivityCF: INodeProperties[] = [
 				value: "={{$value}}"
 			},
 		},
-		default: null,
+		default: '',
 	},
 	{
 		displayName: 'Description',
@@ -2315,7 +2179,7 @@ const postActivityCF: INodeProperties[] = [
 				value: "={{$value}}"
 			},
 		},
-		default: null,
+		default: '',
 		required: true
 	},
 	{
@@ -2335,7 +2199,7 @@ const postActivityCF: INodeProperties[] = [
 				value: "={{$value}}"
 			},
 		},
-		default: null,
+		default: '',
 	},
 	{
 		displayName: 'Lien (url) vers la tâche',

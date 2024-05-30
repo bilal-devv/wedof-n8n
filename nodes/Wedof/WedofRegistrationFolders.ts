@@ -363,7 +363,7 @@ const getAllRFWithQueries: INodeProperties[] = [
 		default: '',
 		description: 'Permet de n\'obtenir que les dossiers associés à la proposition donnée.',
 	},
-	/*{
+	{
 		displayName: 'Taux de complétion de la formation',
 		name: 'completionRate',
 		type: 'options',
@@ -386,13 +386,12 @@ const getAllRFWithQueries: INodeProperties[] = [
 			send: {
 				type: 'query',
 				property: 'completionRate',
-				value: "={{$value === 'all' ? 'null' : $value}}"
+				value : '={{ $value !== \'all\' ? $value : undefined }}'
 			},
 		},
-		default: null,
+		default: 'all',
 		description: 'Permet de n\'obtenir que les dossiers dont le taux d\'assiduité est égale à 0, inférieur à 25%, compris entre 25% et 80%, supérieurs à 80%, égal à 100% -par défaut tous les dossiers sont retournés.',
-	}, */// PROBLEME HERE
-	/*
+	},
 	{
 		displayName: 'Taux de complétion pas mis à jour depuis X jour(s)',
 		name: 'daysSinceLastUpdatedCompletionRate',
@@ -407,12 +406,12 @@ const getAllRFWithQueries: INodeProperties[] = [
 			send: {
 				type: 'query',
 				property: 'daysSinceLastUpdatedCompletionRate',
+				value : '={{ $value !== \'\' ? $value : undefined }}'
 			},
 		},
-		default: null,
+		default: '',
 		description: 'Permet de n\'obtenir que les dossiers pour lesquels le taux d\'avancement n\'a pas été mis à jour depuis plus de X jour(s), X étant le nombre de jours. -par défaut tous les dossiers sont retournés.',
-	},*/
-	// PROBLEME HERE
+	},
 	{
 		displayName: 'Tri sur critère',
 		name: 'tri',
@@ -502,7 +501,6 @@ const getAllRFWithQueries: INodeProperties[] = [
 		},
 		typeOptions: {
 			minValue: 1,
-			maxValue: 1000,
 		},
 		default: 1,
 		description: 'Numéro de page de la requête - par défaut la première.',
@@ -575,12 +573,40 @@ const terminate: INodeProperties[] = [
 	{
 		displayName: 'Code de sortie de formation',
 		name: 'code',
-		type: 'string',
+		type: 'options',
 		displayOptions: {
 			show: {
 				resource: ['registrationFolders'],
 				operation: ['terminate'],
 			},
+		},
+		typeOptions: {
+			rows: 5,
+			loadOptions: {
+				routing: {
+					request: {
+						method: 'GET',
+						url: '=/registrationFoldersReasons?type=terminated'
+					},
+					output: {
+						postReceive: [
+							{
+								type: 'setKeyValue',
+								properties: {
+									name: '={{$responseItem.label}}',
+									value: '={{$responseItem.code}}',
+								},
+							},
+							{
+								type: 'sort',
+								properties: {
+									key: 'name',
+								},
+							},
+						],
+					}
+				}
+			}
 		},
 		routing: {
 			send: {
@@ -588,8 +614,8 @@ const terminate: INodeProperties[] = [
 				property: 'terminate',
 			},
 		},
-		default: '',
-	}, // les codes de sortie de formation possibles sont disponibles en appelant /api/registrationFoldersReasons?type=terminated
+		default: ''
+	}, // problem
 	{
 		displayName: 'Durée d\'absence (heures)',
 		name: 'absenceDuration',
@@ -606,7 +632,7 @@ const terminate: INodeProperties[] = [
 				property: 'absenceDuration',
 			},
 		},
-		default: null,
+		default: '',
 	},
 ]
 
@@ -647,7 +673,7 @@ const serviceDone: INodeProperties[] = [
 				property: 'absenceDuration',
 			},
 		},
-		default: null,
+		default: '',
 	},
 	{
 		displayName: 'Absence pour force majeure',
@@ -744,7 +770,7 @@ const inTraining: INodeProperties[] = [
 				value: "={{$value}}"
 			},
 		},
-		default: null,
+		default: '',
 		required: true
 	},
 ]
@@ -786,7 +812,7 @@ const validate: INodeProperties[] = [
 				property: 'indicativeDuration',
 			},
 		},
-		default: null,
+		default: '',
 	},
 	{
 		displayName: 'Durée par semaine de la formation (heures)',
@@ -804,7 +830,7 @@ const validate: INodeProperties[] = [
 				property: 'weeklyDuration',
 			},
 		},
-		default: null,
+		default: '',
 	},
 ]
 
@@ -864,7 +890,7 @@ const billing: INodeProperties[] = [
 				property: 'vatRate',
 			},
 		},
-		default: null,
+		default: '',
 	}
 ]
 
@@ -892,16 +918,46 @@ const cancel: INodeProperties[] = [
 	{
 		displayName: 'Code d\'annulation',
 		name: 'code',
-		type: 'fixedCollection',
+		type: 'options',
 		displayOptions: {
 			show: {
 				resource: ['registrationFolders'],
 				operation: ['cancel'],
 			},
 		},
-		options: [
-			// les options doivent être selon le retour d'une méthode get
-		],
+		typeOptions: {
+			loadOptions: {
+				routing: {
+					request: {
+						method: 'GET',
+						url: '=/registrationFoldersReasons'
+					},
+					output: {
+						postReceive: [
+							{
+								type: 'rootProperty',
+								properties: {
+									property: '',
+								},
+							},
+							{
+								type: 'setKeyValue',
+								properties: {
+									name: '={{$responseItem.label}}',
+									value: '={{$responseItem.code}}',
+								},
+							},
+							{
+								type: 'sort',
+								properties: {
+									key: 'name',
+								},
+							},
+						],
+					}
+				}
+			}
+		},
 		routing: {
 			send: {
 				type: 'body',
@@ -910,7 +966,7 @@ const cancel: INodeProperties[] = [
 			},
 		},
 		required: true,
-		default: null,
+		default: '',
 	}, // PROBLEME CODE
 	{
 		displayName: 'Description',
@@ -1122,7 +1178,7 @@ const postTaskRF: INodeProperties[] = [
 				value: "={{$value}}"
 			},
 		},
-		default: null,
+		default: '',
 	},
 	{
 		displayName: 'Date de fin de la tâche',
@@ -1141,7 +1197,7 @@ const postTaskRF: INodeProperties[] = [
 				value: "={{$value}}"
 			},
 		},
-		default: null,
+		default: '',
 	},
 	{
 		displayName: 'Type',
@@ -1171,7 +1227,7 @@ const postTaskRF: INodeProperties[] = [
 			},
 		},
 		required: true,
-		default: null,
+		default: '',
 	},
 	{
 		displayName: 'Associée à Qualiopi',
@@ -1320,7 +1376,7 @@ const postTaskRF: INodeProperties[] = [
 				value: "={{$value.join(',')}}"
 			},
 		},
-		default: null,
+		default: '',
 	},
 	{
 		displayName: 'Description',
@@ -1395,7 +1451,7 @@ const postTaskRF: INodeProperties[] = [
 				value: "={{$value}}"
 			},
 		},
-		default: null,
+		default: '',
 	},
 	{
 		displayName: 'Source de donnée de la tâche (humaine ou non)',
@@ -1486,7 +1542,7 @@ const postActivityRF: INodeProperties[] = [
 			},
 		},
 		required: true,
-		default: null,
+		default: '',
 	},
 	{
 		displayName: 'Associée à Qualiopi',
@@ -1635,7 +1691,7 @@ const postActivityRF: INodeProperties[] = [
 				value: "={{$value.join(',')}}"
 			},
 		},
-		default: null,
+		default: '',
 	},
 	{
 		displayName: 'Description',
@@ -1674,7 +1730,7 @@ const postActivityRF: INodeProperties[] = [
 		default: '',
 		description: 'L\'email utilisateur doit faire partis des emails des utilisateurs liés à l\'organisme.',
 		required: true
-	},
+	}, // PROBLEM HERE
 	{
 		displayName: 'Date de début de la tâche',
 		name: 'eventTime',
@@ -1692,7 +1748,7 @@ const postActivityRF: INodeProperties[] = [
 				value: "={{$value}}"
 			},
 		},
-		default: null,
+		default: '',
 		required: true
 	},
 	{
@@ -1712,7 +1768,7 @@ const postActivityRF: INodeProperties[] = [
 				value: "={{$value}}"
 			},
 		},
-		default: null,
+		default: '',
 	},
 	{
 		displayName: 'Lien (url) vers la tâche',
@@ -1752,7 +1808,6 @@ const postActivityRF: INodeProperties[] = [
 		default: 'manual',
 	},
 ]
-
 
 export const registrationFoldersOperations: INodeProperties[] = [
 	{

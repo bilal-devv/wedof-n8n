@@ -12,6 +12,7 @@ RUN npm install
 
 # 
 # Build the project
+RUN npm install -g typescript
 RUN npx tsc && npx gulp build:icons
 
 # Expose the port n8n will run on

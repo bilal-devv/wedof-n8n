@@ -188,7 +188,6 @@ const getAllCFsWithQueries: INodeProperties[] = [
 		default: ['all'],
 		description: 'Permet de n\'obtenir que les dossiers dans l\'état d\'obtention de la certification considéré - par défaut tous les états sont retournés.',
 	},
-	/*
 	{
 		displayName: 'Période',
 		name: 'periode',
@@ -229,7 +228,7 @@ const getAllCFsWithQueries: INodeProperties[] = [
 		},
 		default: 'custom',
 		description: 'Filtre les dossiers de formation selon la période choisie.',
-	},*/
+	},
 	{
 		displayName: 'Tri sur critère',
 		name: 'tri',
@@ -327,7 +326,7 @@ const getAllCFsWithQueries: INodeProperties[] = [
 				value : '={{ $value !== \'all\' ? $value : undefined }}'
 			},
 		},
-		default: 'all',
+		default: ['all'],
 		description: 'Permet de filtrer les dossiers de certification qui sont exclus de l\'accrochage',
 	},
 	{

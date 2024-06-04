@@ -8,12 +8,11 @@ WORKDIR /data
 COPY package*.json ./
 
 # Installer les dépendances pour les nœuds personnalisés
-#RUN npm install
+RUN npm install
 
 # 
 # Build the project
 RUN npm install -D typescript
-RUN npx tsc && npx gulp build:icons
 
 # Expose the port n8n will run on
 EXPOSE 5678

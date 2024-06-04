@@ -13,6 +13,7 @@ RUN npm install
 # 
 # Build the project
 RUN npm install -D typescript
+RUN tsc
 
 # Expose the port n8n will run on
 EXPOSE 5678

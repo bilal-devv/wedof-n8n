@@ -28,7 +28,7 @@ export class WedofApi implements ICredentialType {
 	authenticate = {
 		type: 'generic',
 		properties: {
-			qs: {
+			headers: {
 				'x-api-key': '={{$credentials.apiKey}}'
 			}
 		},

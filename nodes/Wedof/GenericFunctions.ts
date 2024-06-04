@@ -1,4 +1,13 @@
-import {IHookFunctions, IWebhookFunctions, jsonParse} from "n8n-workflow";
+import {
+	IDataObject,
+	IHookFunctions,
+	IHttpRequestMethods,
+	IWebhookFunctions,
+	JsonObject,
+	jsonParse,
+	NodeApiError
+} from "n8n-workflow";
+import {IExecuteFunctions, ILoadOptionsFunctions, IPollFunctions} from "n8n-core";
 
 class IRequestOptions {
 }
@@ -104,4 +113,113 @@ export namespace WedofWebhookApi {
 
 		return await ref.helpers.requestWithAuthentication.call(ref, credentialsName, options);
 	};
+}
+
+export async function wedofApiRequest(
+	this: IExecuteFunctions | ILoadOptionsFunctions | IPollFunctions,
+	method: IHttpRequestMethods,
+	endpoint: string,
+	body: IDataObject = {},
+	qs: IDataObject = {},
+	uri?: string,
+	option: IDataObject = {},
+) {
+
+	let options: IRequestOptions = {
+		headers: {
+			Accept: 'application/json',
+			'Content-Type': 'application/json'
+		},
+		method,
+		body,
+		qs,
+		uri: uri || `https://staging.wedof.fr/api${endpoint}`,
+		qsStringifyOptions: {
+			arrayFormat: 'repeat',
+		},
+		json: true,
+	};
+	options = Object.assign({}, options, option);
+	try {
+
+		let credentialType = 'WedofApi';
+
+		return await this.helpers.requestWithAuthentication.call(
+			this,
+			credentialType,
+			options,
+		);
+
+	} catch (error) {
+		if (error.code === 'ERR_OSSL_PEM_NO_START_LINE') {
+			error.statusCode = '401';
+		}
+
+		if (error.httpCode === '400') {
+			if (error.cause && ((error.cause.message as string) || '').includes('Invalid id value')) {
+				const resource = this.getNodeParameter('resource', 0) as string;
+				const errorOptions = {
+					message: `Invalid ${resource} ID`,
+					description: `${
+						resource.charAt(0).toUpperCase() + resource.slice(1)
+					} IDs should look something like this: 182b676d244938bd`,
+				};
+				throw new NodeApiError(this.getNode(), error as JsonObject, errorOptions);
+			}
+		}
+
+		if (error.httpCode === '404') {
+			let resource = this.getNodeParameter('resource', 0) as string;
+			if (resource === 'label') {
+				resource = 'label ID';
+			}
+			const errorOptions = {
+				message: `${resource.charAt(0).toUpperCase() + resource.slice(1)} not found`,
+				description: '',
+			};
+			throw new NodeApiError(this.getNode(), error as JsonObject, errorOptions);
+		}
+
+		if (error.httpCode === '409') {
+			const resource = this.getNodeParameter('resource', 0) as string;
+			if (resource === 'label') {
+				const errorOptions = {
+					message: 'Label name exists already',
+					description: '',
+				};
+				throw new NodeApiError(this.getNode(), error as JsonObject, errorOptions);
+			}
+		}
+
+
+		if (
+			((error.message as string) || '').includes('Bad request - please check your parameters') &&
+			error.description
+		) {
+			const errorOptions = {
+				message: error.description,
+				description: '',
+			};
+			throw new NodeApiError(this.getNode(), error as JsonObject, errorOptions);
+		}
+		console.log(error);
+		throw new NodeApiError(this.getNode(), error as JsonObject, {
+			message: error.message,
+			description: error.description,
+		});
+	}
+}
+
+export async function wedofApiRequestAllItems(
+	this: IExecuteFunctions | ILoadOptionsFunctions | IPollFunctions,
+	method: IHttpRequestMethods,
+	endpoint: string,
+	body: any = {},
+): Promise<any> {
+
+	let responseData;
+
+	responseData = await wedofApiRequest.call(this, method, endpoint, body as IDataObject);
+
+	return responseData;
 }

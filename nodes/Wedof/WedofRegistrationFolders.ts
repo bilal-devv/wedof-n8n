@@ -40,7 +40,7 @@ const getRFDocuments: INodeProperties[] = [
 		routing: {
 			request: {
 				method: 'GET',
-				url: '=/registrationFolders/{{$value}}/documents',
+				url: '=/registrationFolders/{{$value}}/files',
 			},
 		},
 		required: true,
@@ -581,41 +581,10 @@ const terminate: INodeProperties[] = [
 			},
 		},
 		typeOptions: {
-			rows: 5,
-			loadOptions: {
-				routing: {
-					request: {
-						method: 'GET',
-						url: '=/registrationFoldersReasons?type=terminated'
-					},
-					output: {
-						postReceive: [
-							{
-								type: 'setKeyValue',
-								properties: {
-									name: '={{$responseItem.label}}',
-									value: '={{$responseItem.code}}',
-								},
-							},
-							{
-								type: 'sort',
-								properties: {
-									key: 'name',
-								},
-							},
-						],
-					}
-				}
-			}
-		},
-		routing: {
-			send: {
-				type: 'body',
-				property: 'terminate',
-			},
+			loadOptionsMethod: 'terminatedOrServiceDone',
 		},
 		default: ''
-	}, // problem
+	},
 	{
 		displayName: 'Durée d\'absence (heures)',
 		name: 'absenceDuration',
@@ -722,14 +691,17 @@ const serviceDone: INodeProperties[] = [
 				operation: ['serviceDone'],
 			},
 		},
+		typeOptions: {
+			loadOptionsMethod: 'terminatedOrServiceDone',
+		},
 		routing: {
 			send: {
 				type: 'body',
-				property: 'terminate',
+				property: 'serviceDone',
 			},
 		},
-		default: 8, // A COMPLETER
-	}, // les codes de sortie de formation possibles sont disponibles en appelant /api/registrationFoldersReasons?type=terminated
+		default: '',
+	},
 ]
 
 const inTraining: INodeProperties[] = [
@@ -926,48 +898,17 @@ const cancel: INodeProperties[] = [
 			},
 		},
 		typeOptions: {
-			loadOptions: {
-				routing: {
-					request: {
-						method: 'GET',
-						url: '=/registrationFoldersReasons'
-					},
-					output: {
-						postReceive: [
-							{
-								type: 'rootProperty',
-								properties: {
-									property: '',
-								},
-							},
-							{
-								type: 'setKeyValue',
-								properties: {
-									name: '={{$responseItem.label}}',
-									value: '={{$responseItem.code}}',
-								},
-							},
-							{
-								type: 'sort',
-								properties: {
-									key: 'name',
-								},
-							},
-						],
-					}
-				}
-			}
+			loadOptionsMethod: 'canceled',
 		},
 		routing: {
 			send: {
 				type: 'body',
 				property: 'code',
-				value: '={{$value}}'
 			},
 		},
 		required: true,
 		default: '',
-	}, // PROBLEME CODE
+	},
 	{
 		displayName: 'Description',
 		name: 'description',
@@ -1135,7 +1076,7 @@ const postTaskRF: INodeProperties[] = [
 		routing: {
 			request: {
 				method: 'POST',
-				url: '=/registrationFolders/RegistrationFolder/{{$value}}',
+				url: '=/activities/RegistrationFolder/{{$value}}',
 			},
 		},
 		required: true,
@@ -1175,28 +1116,10 @@ const postTaskRF: INodeProperties[] = [
 			send: {
 				type: 'body',
 				property: 'dueDate',
-				value: "={{$value}}"
+				value : '={{ $value !== \'\' ? $value : undefined }}'
 			},
 		},
-		default: '',
-	},
-	{
-		displayName: 'Date de fin de la tâche',
-		name: 'eventEndTime',
-		type: 'hidden',
-		displayOptions: {
-			show: {
-				resource: ['registrationFolders'],
-				operation: ['postTaskRF'],
-			},
-		},
-		routing: {
-			send: {
-				type: 'body',
-				property: 'eventEndTime',
-				value: "={{$value}}"
-			},
-		},
+		required: false,
 		default: '',
 	},
 	{
@@ -1373,9 +1296,9 @@ const postTaskRF: INodeProperties[] = [
 			send: {
 				type: 'body',
 				property: 'qualiopiIndicators',
-				value: "={{$value.join(',')}}"
 			},
 		},
+		required: false,
 		default: '',
 	},
 	{
@@ -1394,12 +1317,13 @@ const postTaskRF: INodeProperties[] = [
 				property: 'description',
 			},
 		},
+		required: false,
 		default: '',
 	},
 	{
-		displayName: 'Responsable (email de l\'utilisateur',
+		displayName: 'Responsable (email de l\'utilisateur)',
 		name: 'userEmail',
-		type: 'string',
+		type: 'options',
 		displayOptions: {
 			show: {
 				resource: ['registrationFolders'],
@@ -1411,6 +1335,9 @@ const postTaskRF: INodeProperties[] = [
 				type: 'body',
 				property: 'userEmail',
 			},
+		},
+		typeOptions: {
+			loadOptionsMethod: 'usersOrganisms'
 		},
 		default: '',
 		description: 'L\'email utilisateur doit faire partis des emails des utilisateurs liés à l\'organisme.',
@@ -1430,25 +1357,6 @@ const postTaskRF: INodeProperties[] = [
 			send: {
 				type: 'body',
 				property: 'link',
-			},
-		},
-		default: '',
-	},
-	{
-		displayName: 'Date de début de la tâche',
-		name: 'eventTime',
-		type: 'hidden',
-		displayOptions: {
-			show: {
-				resource: ['registrationFolders'],
-				operation: ['postTaskRF'],
-			},
-		},
-		routing: {
-			send: {
-				type: 'body',
-				property: 'eventTime',
-				value: "={{$value}}"
 			},
 		},
 		default: '',
@@ -1488,7 +1396,7 @@ const postActivityRF: INodeProperties[] = [
 		routing: {
 			request: {
 				method: 'POST',
-				url: '=/registrationFolders/RegistrationFolder/{{$value}}',
+				url: '=/activities/RegistrationFolder/{{$value}}',
 			},
 		},
 		required: true,
@@ -1688,9 +1596,9 @@ const postActivityRF: INodeProperties[] = [
 			send: {
 				type: 'body',
 				property: 'qualiopiIndicators',
-				value: "={{$value.join(',')}}"
 			},
 		},
+		required: false,
 		default: '',
 	},
 	{
@@ -1709,12 +1617,13 @@ const postActivityRF: INodeProperties[] = [
 				property: 'description',
 			},
 		},
+		required: false,
 		default: '',
 	},
 	{
-		displayName: 'Responsable (email de l\'utilisateur',
+		displayName: 'Responsable (email de l\'utilisateur)',
 		name: 'userEmail',
-		type: 'string',
+		type: 'options',
 		displayOptions: {
 			show: {
 				resource: ['registrationFolders'],
@@ -1727,10 +1636,13 @@ const postActivityRF: INodeProperties[] = [
 				property: 'userEmail',
 			},
 		},
+		typeOptions: {
+			loadOptionsMethod: 'usersOrganisms'
+		},
 		default: '',
 		description: 'L\'email utilisateur doit faire partis des emails des utilisateurs liés à l\'organisme.',
 		required: true
-	}, // PROBLEM HERE
+	},
 	{
 		displayName: 'Date de début de la tâche',
 		name: 'eventTime',
@@ -1765,9 +1677,10 @@ const postActivityRF: INodeProperties[] = [
 			send: {
 				type: 'body',
 				property: 'eventEndTime',
-				value: "={{$value}}"
+				value : '={{ $value !== \'\' ? $value : undefined }}'
 			},
 		},
+		required: false,
 		default: '',
 	},
 	{
@@ -1786,6 +1699,7 @@ const postActivityRF: INodeProperties[] = [
 				property: 'link',
 			},
 		},
+		required: false,
 		default: '',
 	},
 	{

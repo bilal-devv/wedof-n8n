@@ -40,7 +40,7 @@ const getCFDocuments: INodeProperties[] = [
 		routing: {
 			request: {
 				method: 'GET',
-				url: '=/certificationFolders/{{$value}}/documents',
+				url: '=/certificationFolders/{{$value}}/files',
 			},
 		},
 		required: true,
@@ -1566,7 +1566,7 @@ const postTaskCF: INodeProperties[] = [
 		routing: {
 			request: {
 				method: 'POST',
-				url: '=/certificationFolders/CertificationFolder/{{$value}}',
+				url: '=/activities/CertificationFolder/{{$value}}',
 			},
 		},
 		required: true,
@@ -1606,28 +1606,10 @@ const postTaskCF: INodeProperties[] = [
 			send: {
 				type: 'body',
 				property: 'dueDate',
-				value: "={{$value}}"
+				value : '={{ $value !== \'\' ? $value : undefined }}'
 			},
 		},
-		default: '',
-	},
-	{
-		displayName: 'Date de fin de la tâche',
-		name: 'eventEndTime',
-		type: 'hidden',
-		displayOptions: {
-			show: {
-				resource: ['certificationFolders'],
-				operation: ['postTaskCF'],
-			},
-		},
-		routing: {
-			send: {
-				type: 'body',
-				property: 'eventEndTime',
-				value: "={{$value}}"
-			},
-		},
+		required: false,
 		default: '',
 	},
 	{
@@ -1804,9 +1786,9 @@ const postTaskCF: INodeProperties[] = [
 			send: {
 				type: 'body',
 				property: 'qualiopiIndicators',
-				value: "={{$value}}"
 			},
 		},
+		required: false,
 		default: '',
 	},
 	{
@@ -1825,12 +1807,13 @@ const postTaskCF: INodeProperties[] = [
 				property: 'description',
 			},
 		},
+		required: false,
 		default: '',
 	},
 	{
-		displayName: 'Responsable (email de l\'utilisateur',
+		displayName: 'Responsable (email de l\'utilisateur)',
 		name: 'userEmail',
-		type: 'string',
+		type: 'options',
 		displayOptions: {
 			show: {
 				resource: ['certificationFolders'],
@@ -1842,6 +1825,9 @@ const postTaskCF: INodeProperties[] = [
 				type: 'body',
 				property: 'userEmail',
 			},
+		},
+		typeOptions: {
+			loadOptionsMethod: 'usersOrganisms'
 		},
 		default: '',
 		description: 'L\'email utilisateur doit faire partis des emails des utilisateurs liés à l\'organisme.',
@@ -1861,25 +1847,6 @@ const postTaskCF: INodeProperties[] = [
 			send: {
 				type: 'body',
 				property: 'link',
-			},
-		},
-		default: '',
-	},
-	{
-		displayName: 'Date de début de la tâche',
-		name: 'eventTime',
-		type: 'hidden',
-		displayOptions: {
-			show: {
-				resource: ['certificationFolders'],
-				operation: ['postTaskCF'],
-			},
-		},
-		routing: {
-			send: {
-				type: 'body',
-				property: 'eventTime',
-				value: "={{$value}}"
 			},
 		},
 		default: '',
@@ -1919,7 +1886,7 @@ const postActivityCF: INodeProperties[] = [
 		routing: {
 			request: {
 				method: 'POST',
-				url: '=/certificationFolders/CertificationFolder/{{$value}}',
+				url: '=/activities/CertificationFolder/{{$value}}',
 			},
 		},
 		required: true,
@@ -2119,9 +2086,9 @@ const postActivityCF: INodeProperties[] = [
 			send: {
 				type: 'body',
 				property: 'qualiopiIndicators',
-				value: "={{$value}}"
 			},
 		},
+		required: false,
 		default: '',
 	},
 	{
@@ -2140,12 +2107,13 @@ const postActivityCF: INodeProperties[] = [
 				property: 'description',
 			},
 		},
+		required: false,
 		default: '',
 	},
 	{
-		displayName: 'Responsable (email de l\'utilisateur',
+		displayName: 'Responsable (email de l\'utilisateur)',
 		name: 'userEmail',
-		type: 'string',
+		type: 'options',
 		displayOptions: {
 			show: {
 				resource: ['certificationFolders'],
@@ -2157,6 +2125,9 @@ const postActivityCF: INodeProperties[] = [
 				type: 'body',
 				property: 'userEmail',
 			},
+		},
+		typeOptions: {
+			loadOptionsMethod: 'usersOrganisms'
 		},
 		default: '',
 		description: 'L\'email utilisateur doit faire partis des emails des utilisateurs liés à l\'organisme.',
@@ -2196,9 +2167,10 @@ const postActivityCF: INodeProperties[] = [
 			send: {
 				type: 'body',
 				property: 'eventEndTime',
-				value: "={{$value}}"
+				value : '={{ $value !== \'\' ? $value : undefined }}'
 			},
 		},
+		required: false,
 		default: '',
 	},
 	{
@@ -2217,6 +2189,7 @@ const postActivityCF: INodeProperties[] = [
 				property: 'link',
 			},
 		},
+		required: false,
 		default: '',
 	},
 	{

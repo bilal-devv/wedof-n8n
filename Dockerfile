@@ -11,8 +11,11 @@ COPY package*.json ./
 RUN npm install
 
 # 
-RUN npm install -g typescript
+# Build the project
+RUN npx tsc && npx gulp build:icons
 
+# Expose the port n8n will run on
+EXPOSE 5678
 # Copier les fichiers du projet dans le conteneur
 
 # Construire les nœuds personnalisés

@@ -11,7 +11,6 @@ COPY package*.json ./
 RUN npm install
 
 # Copier les fichiers du projet dans le conteneur
-COPY .idea .
 
 # Construire les nœuds personnalisés
 RUN npm run build

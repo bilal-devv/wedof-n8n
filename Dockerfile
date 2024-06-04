@@ -10,6 +10,9 @@ COPY package*.json ./
 # Installer les dépendances pour les nœuds personnalisés
 RUN npm install
 
+# 
+RUN npm install -g typescript
+
 # Copier les fichiers du projet dans le conteneur
 
 # Construire les nœuds personnalisés

@@ -133,11 +133,11 @@ export class WedofTrigger implements INodeType {
 
 				const events = this.getNodeParameter('events') as string[];
 
-				const secret = this.getNodeParameter('secret') as string;
+				const secret = '';
 
-				const enabled = this.getNodeParameter('enabled') as string;
+				const enabled = '';
 
-				const ignoreSsl = this.getNodeParameter('ignoreSsl') as string;
+				const ignoreSsl =  '';
 
 				const responseData = await WedofWebhookApi.createWebHook(this, webhookUrl, events, secret, enabled, ignoreSsl);
 

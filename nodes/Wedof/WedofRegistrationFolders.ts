@@ -1740,17 +1740,17 @@ export const registrationFoldersOperations: INodeProperties[] = [
 			{
 				name: 'Récupérer un dossier de formation',
 				value: 'getRF',
-				action: 'Récupérer un dossier de formation à partir de son n° de dossier'
+				action: 'Récupérer un dossier',
 			},
 			{
 				name: 'Liste des documents d\'un dossier de formation',
 				value: 'getRFDocuments',
-				action: 'La liste des documents renseignés et attendus pour un dossier de formation donné'
+				action: 'La liste des documents renseignés et attendus pour un dossier'
 			},
 			{
 				name: 'Liste des dossiers de formation',
 				value: 'getAllRF',
-				action: 'Liste les dossiers de formation lié à l\'organisme\n',
+				action: 'Liste des dossiers de mon l\'organisme\n',
 				routing: {
 					request: {
 						method: 'GET',
@@ -1761,7 +1761,7 @@ export const registrationFoldersOperations: INodeProperties[] = [
 			{
 				name: 'Rechercher un ou plusieurs dossier de formation',
 				value: 'getAllRFWithQueries',
-				action: 'Liste les dossiers de formation en fonction des critères sélectionnés',
+				action: 'Rechercher un ou plusieurs dossier',
 				routing: {
 					request: {
 						method: 'GET',
@@ -1772,62 +1772,62 @@ export const registrationFoldersOperations: INodeProperties[] = [
 			{
 				name: 'Liste de toutes les activités et tâches d\'un dossier de formation',
 				value: 'getRFActivitiesTasks',
-				action: 'Récupère l\'ensemble des activités et tâches liées à un dossier de formation'
+				action: 'Récupère l\'ensemble des activités et tâches liées à un dossier'
 			},
 			{
 				name: 'Mettre à jour un dossier de formation',
 				value: 'updateRF',
-				action: 'Met à jour certaines informations modifiable d\'un dossier de formation'
+				action: 'Mettre à un jour un dossier'
 			},
 			{
-				name: 'Passer un dossier de formation à l’état : sortie de formation',
+				name: 'Passer un dossier à l’état : sortie de formation',
 				value: 'terminate',
-				action: 'Change l\'état d\'un dossier de formation vers : sortie de formation'
+				action: 'Change l\'état d\'un dossier vers : sortie de formation'
 			},
 			{
-				name: 'Passer un dossier de formation à l’état : service fait déclaré',
+				name: 'Passer un dossier à l’état : service fait déclaré',
 				value: 'serviceDone',
-				action: 'Change l\'état d\'un dossier de formation vers : service fait déclaré'
+				action: 'Change l\'état d\'un dossier vers : service fait déclaré'
 			},
 			{
-				name: 'Passer un dossier de formation à l’état : en formation',
+				name: 'Passer un dossier à l’état : en formation',
 				value: 'inTraining',
-				action: 'Change l\'état d\'un dossier de formation vers : en formation'
+				action: 'Change l\'état d\'un dossier vers : en formation'
 			},
 			{
-				name: 'Passer un dossier de formation à l’état : validé',
+				name: 'Passer un dossier à l’état : validé',
 				value: 'validate',
-				action: 'Change l\'état d\'un dossier de formation vers : validé'
+				action: 'Change l\'état d\'un dossier vers : validé'
 			},
 			{
-				name: 'Passer un dossier de formation à l’état : facturé',
+				name: 'Passer un dossier à l’état : facturé',
 				value: 'billing',
-				action: 'Change l\'état d\'un dossier de formation vers : facturé'
+				action: 'Change l\'état d\'un dossier vers : facturé'
 			},
 			{
-				name: 'Passer un dossier de formation à l’état : annulé',
+				name: 'Passer un dossier à l’état : annulé',
 				value: 'cancel',
-				action: 'Change l\'état d\'un dossier de formation vers : annulé'
+				action: 'Change l\'état d\'un dossier vers : annulé'
 			},
 			{
-				name: 'Passer un dossier de formation à l’état : à contrôler',
+				name: 'Passer un dossier à l’état : à contrôler',
 				value: 'control',
-				action: 'Change l\'état d\'un dossier de formation vers : à contrôler'
+				action: 'Change l\'état d\'un dossier vers : à contrôler'
 			},
 			{
 				name: 'Passer un dossier de formation à l’état : abandonné',
 				value: 'abort',
-				action: 'Change l\'état d\'un dossier de formation vers : abandonné'
+				action: 'Change l\'état d\'un dossier vers : abandonné'
 			},
 			{
 				name: 'Créer une tâche pour un dossier de formation',
 				value: 'postTaskRF',
-				action: 'Créer une tâche pour un dossier de formation'
+				action: 'Créer une tâche pour un dossier'
 			},
 			{
 				name: 'Créer une activité pour un dossier de formation',
 				value: 'postActivityRF',
-				action: 'Créer une activité pour un dossier de formation'
+				action: 'Créer une activité pour un dossier'
 			},
 		],
 		default: 'getRF',

@@ -1826,7 +1826,7 @@ const postTaskCF: INodeProperties[] = [
 			},
 		},
 		typeOptions: {
-			loadOptionsMethod: 'usersOrganisms'
+			loadOptionsMethod: 'usersOrganism'
 		},
 		default: '',
 		description: 'L\'email utilisateur doit faire partis des emails des utilisateurs liés à l\'organisme.',
@@ -2126,7 +2126,7 @@ const postActivityCF: INodeProperties[] = [
 			},
 		},
 		typeOptions: {
-			loadOptionsMethod: 'usersOrganisms'
+			loadOptionsMethod: 'usersOrganism'
 		},
 		default: '',
 		description: 'L\'email utilisateur doit faire partis des emails des utilisateurs liés à l\'organisme.',
@@ -2230,17 +2230,17 @@ export const certificationFoldersOperations: INodeProperties[] = [
 			{
 				name: 'Récupérer un dossier de certification',
 				value: 'getCF',
-				action: 'Récupérer un dossier de certification à partir de son n° de dossier'
+				action: 'Récupérer un dossier',
 			},
 			{
 				name: 'Liste des documents d\'un dossier de certification',
 				value: 'getDocuments',
-				action: 'La liste des documents renseignés et attendus pour un dossier de certification donné'
+				action: 'La liste des documents renseignés et attendus pour un dossier'
 			},
 			{
 				name: 'Liste des dossiers de certification',
 				value: 'getAllCF',
-				action: 'Liste les dossiers de certification lié à l\'organisme\n',
+				action: 'Liste des dossiers de mon l\'organisme\n',
 				routing: {
 					request: {
 						method: 'GET',
@@ -2251,7 +2251,7 @@ export const certificationFoldersOperations: INodeProperties[] = [
 			{
 				name: 'Rechercher un ou plusieurs dossier de certification',
 				value: 'getAllCFsWithQueries',
-				action: 'Liste les dossiers de certification en fonction des critères sélectionnés',
+				action: 'Rechercher un ou plusieurs dossier',
 				routing: {
 					request: {
 						method: 'GET',
@@ -2262,62 +2262,62 @@ export const certificationFoldersOperations: INodeProperties[] = [
 			{
 				name: 'Liste de toutes les activités et tâches d\'un dossier de certification',
 				value: 'getCFActivitiesTasks',
-				action: 'Récupère l\'ensemble des activités et tâches liées à un dossier de certification'
+				action: 'Liste de toutes les activités et tâches d\'un dossier',
 			},
 			{
 				name: 'Mettre à jour un dossier de certification',
 				value: 'updateCF',
-				action: 'Met à jour certaines informations modifiable d\'un dossier de certification'
+				action: 'Mettre à un jour un dossier'
 			},
 			{
-				name: 'Passer un dossier de certification à l’état : réussi',
+				name: 'Passer un dossier à l’état : réussi',
 				value: 'success',
-				action: 'Change l\'état d\'un dossier de certification vers : réussi'
+				action: 'Change l\'état d\'un dossier vers : réussi'
 			},
 			{
-				name: 'Passer un dossier de certification à l’état : refuser',
+				name: 'Passer un dossier à l’état : refuser',
 				value: 'refuse',
-				action: 'Change l\'état d\'un dossier de certification vers : refuser'
+				action: 'Change l\'état d\'un dossier vers : refuser'
 			},
 			{
-				name: 'Passer un dossier de certification à l’état : prêt à passer',
+				name: 'Passer un dossier à l’état : prêt à passer',
 				value: 'take',
-				action: 'Change l\'état d\'un dossier de certification vers : prêt à passer'
+				action: 'Change l\'état d\'un dossier vers : prêt à passer'
 			},
 			{
-				name: 'Passer un dossier de certification à l’état : enregistré',
+				name: 'Passer un dossier à l’état : enregistré',
 				value: 'register',
-				action: 'Change l\'état d\'un dossier de certification vers : enregistré'
+				action: 'Change l\'état d\'un dossier vers : enregistré'
 			},
 			{
-				name: 'Passer un dossier de certification à l’état : échoué',
+				name: 'Passer un dossier à l’état : échoué',
 				value: 'fail',
-				action: 'Change l\'état d\'un dossier de certification vers : échoué'
+				action: 'Change l\'état d\'un dossier vers : échoué'
 			},
 			{
-				name: 'Passer un dossier de certification à l’état : prêt à repasser',
+				name: 'Passer un dossier à l’état : prêt à repasser',
 				value: 'retake',
-				action: 'Change l\'état d\'un dossier de certification vers : prêt à repasser'
+				action: 'Change l\'état d\'un dossier vers : prêt à repasser'
 			},
 			{
-				name: 'Passer un dossier de certification à l’état : à contrôler',
+				name: 'Passer un dossier à l’état : à contrôler',
 				value: 'control',
-				action: 'Change l\'état d\'un dossier de certification vers : à contrôler'
+				action: 'Change l\'état d\'un dossier vers : à contrôler'
 			},
 			{
 				name: 'Passer un dossier de certification à l’état : abandonné',
 				value: 'abort',
-				action: 'Change l\'état d\'un dossier de certification vers : abandonné'
+				action: 'Change l\'état d\'un dossier vers : abandonné'
 			},
 			{
 				name: 'Créer une tâche pour un dossier de certification',
 				value: 'postTaskCF',
-				action: 'Créer une tâche pour un dossier de certification'
+				action: 'Créer une tâche pour un dossier'
 			},
 			{
 				name: 'Créer une activité pour un dossier de certification',
 				value: 'postActivityCF',
-				action: 'Créer une activité pour un dossier de certification'
+				action: 'Créer une activité pour un dossier'
 			},
 		],
 		default: 'getCF',

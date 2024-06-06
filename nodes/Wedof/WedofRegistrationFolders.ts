@@ -302,10 +302,9 @@ const getAllRFWithQueries: INodeProperties[] = [
 		default: ['all'],
 		description: 'Permet de n\'obtenir que les dossiers dans l\'état de contrôle considéré - par défaut tous les états sont retournés.',
 	},
-	/*
 	{
 		displayName: 'Période',
-		name: 'periode',
+		name: 'periodeRf',
 		type: 'options',
 		displayOptions: {
 			show: {
@@ -332,18 +331,100 @@ const getAllRFWithQueries: INodeProperties[] = [
 			{name: "12 prochains mois", value: "rollingYearFuture"},
 			{name: "Année prochaine", value: "nextYear"},
 			{name: "Année précédente", value: "previousYear"},
-			{name: "Année courante", value: "currentYear"},
-			{name: "Période de facturation Wedof en cours", value: "wedofInvoice"}
+			{name: "Année courante", value: "currentYear"}
 		],
 		routing: {
 			send: {
 				type: 'query',
 				property: 'period',
+				value : '={{ $value !== \'\' ? $value : undefined }}'
 			},
 		},
-		default: 'custom',
+		required: false,
+		default: '',
 		description: 'Filtre les dossiers de formation selon la période choisie.',
-	},*/
+	},
+	{
+		displayName: "Depuis le",
+		name: "since",
+		type: "dateTime",
+		displayOptions: {
+			show: {
+				"periodeRf": ["custom"]
+			}
+		},
+		routing: {
+			send: {
+				type: 'query',
+				property: 'since',
+			},
+		},
+		required: true,
+		default: "",
+		description: "Sélectionnez la date de début pour la période personnalisée."
+	},
+	{
+		displayName: "Jusqu'au",
+		name: "until",
+		type: "dateTime",
+		displayOptions: {
+			show: {
+				"periodeRf": ["custom"]
+			}
+		},
+		routing: {
+			send: {
+				type: 'query',
+				property: 'until',
+			},
+		},
+		required: true,
+		default: "",
+		description: "Sélectionnez la date de fin pour la période personnalisée."
+	},
+	{
+		displayName: "Basé sur la date de",
+		name: "filterOnStateDate",
+		type: "options",
+		displayOptions: {
+			show: {
+				"periodeRf": ["custom", "tomorrow", "today", "yesterday", "rollingWeek",
+					"rollingWeekFuture", "nextWeek", "previousWeek", "currentWeek", "rollingMonth",
+					"rollingMonthFuture", "nextMonth", "previousMonth", "currentMonth", "rollingYear",
+					"rollingYearFuture", "nextYear", "previousYear", "currentYear"
+				]
+			}
+		},
+		options: [
+			{ name: "Passage à Non traité", value: "notProcessed" },
+			{ name: "Passage à Validé", value: "validated" },
+			{ name: "Passage à Validé (En cours d'instruction Pôle emploi)", value: "waitingAcceptation" },
+			{ name: "Passage à Accepté", value: "accepted" },
+			{ name: "Passage à En formation", value: "inTraining" },
+			{ name: "Passage à Sortie de formation", value: "terminated" },
+			{ name: "Passage à Service fait déclaré", value: "serviceDoneDeclared" },
+			{ name: "Passage à Service fait validé", value: "serviceDoneValidated" },
+			{ name: "Passage à Annulé (par le titulaire)", value: "canceledByAttendee" },
+			{ name: "Passage à Annulation titulaire (non réalisé)", value: "canceledByAttendeeNotRealized" },
+			{ name: "Passage à Annulé (par l'organisme)", value: "canceledByOrganism" },
+			{ name: "Passage à Annulé (par le financeur)", value: "canceledByFinancer" },
+			{ name: "Passage à Refus titulaire", value: "refusedByAttendee" },
+			{ name: "Passage à Refusé (par l'organisme)", value: "refusedByOrganism" },
+			{ name: "Passage à Refusé (par le financeur)", value: "refusedByFinancer" },
+			{ name: "Dernière mise à jour (par défaut)", value: "lastUpdate" },
+			{ name: "Date de début de session", value: "sessionStartDate" },
+			{ name: "Date de fin de session", value: "sessionEndDate" }
+		],
+		routing: {
+			send: {
+				type: 'query',
+				property: 'filterOnStateDate',
+				value : '={{ $value !== "" ? $value : undefined }}'
+			},
+		},
+		required: false,
+		default: 'lastUpdate',
+	},
 	{
 		displayName: 'Code de proposition',
 		name: 'proposalCode',
@@ -1759,9 +1840,9 @@ export const registrationFoldersOperations: INodeProperties[] = [
 				},
 			},
 			{
-				name: 'Rechercher un ou plusieurs dossier de formation',
+				name: 'Rechercher un ou plusieurs dossiers de formation',
 				value: 'getAllRFWithQueries',
-				action: 'Rechercher un ou plusieurs dossier',
+				action: 'Rechercher un ou plusieurs dossiers',
 				routing: {
 					request: {
 						method: 'GET',

@@ -224,10 +224,104 @@ const getAllCFsWithQueries: INodeProperties[] = [
 			send: {
 				type: 'query',
 				property: 'period',
+				value : '={{ $value !== \'\' ? $value : undefined }}'
 			},
 		},
-		default: 'custom',
+		required: false,
+		default: '',
 		description: 'Filtre les dossiers de formation selon la période choisie.',
+	},
+	{
+		displayName: "Depuis le",
+		name: "since",
+		type: "dateTime",
+		displayOptions: {
+			show: {
+				"periode": ["custom"]
+			}
+		},
+		routing: {
+			send: {
+				type: 'query',
+				property: 'since',
+			},
+		},
+		required: true,
+		default: "",
+		description: "Sélectionnez la date de début pour la période personnalisée."
+	},
+	{
+		displayName: "Jusqu'au",
+		name: "until",
+		type: "dateTime",
+		displayOptions: {
+			show: {
+				"periode": ["custom"]
+			}
+		},
+		routing: {
+			send: {
+				type: 'query',
+				property: 'until',
+			},
+		},
+		required: true,
+		default: "",
+		description: "Sélectionnez la date de fin pour la période personnalisée."
+	},
+	{
+		displayName: "Basé sur la date de",
+		name: "filterOnStateDate",
+		type: "options",
+		displayOptions: {
+			show: {
+				"periode": ["custom", "tomorrow", "today", "yesterday", "rollingWeek",
+					"rollingWeekFuture", "nextWeek", "previousWeek", "currentWeek", "rollingMonth",
+					"rollingMonthFuture", "nextMonth", "previousMonth", "currentMonth", "rollingYear",
+					"rollingYearFuture", "nextYear", "previousYear", "currentYear", "wedofInvoice"
+				]
+			}
+		},
+		options: [
+			{ name: "Dernier changement d'état (par défaut)", value: "stateLastUpdate" },
+			{ name: "Facturable par Wedof", value: "wedofInvoice" },
+			{ name: "Passage à À enregistrer", value: "toRegister" },
+			{ name: "Passage à Enregistré", value: "registered" },
+			{ name: "Passage à Prêt à passer", value: "toTake" },
+			{ name: "Passage à À contrôler", value: "toControl" },
+			{ name: "Passage à Réussi", value: "success" },
+			{ name: "Passage à À repasser", value: "toRetake" },
+			{ name: "Passage à Échoué", value: "failed" },
+			{ name: "Passage à Refusé", value: "refused" },
+			{ name: "Passage à Abandonné", value: "aborted" },
+			{ name: "Début de l'examen", value: "examinationDate" },
+			{ name: "Fin de l'examen", value: "examinationEndDate" },
+			{ name: "Passage à Non traité", value: "notProcessed" },
+			{ name: "Passage à Validé", value: "validated" },
+			{ name: "Passage à Validé (En cours d'instruction Pôle emploi)", value: "waitingAcceptation" },
+			{ name: "Passage à Accepté", value: "accepted" },
+			{ name: "Passage à En formation", value: "inTraining" },
+			{ name: "Passage à Sortie de formation", value: "terminated" },
+			{ name: "Passage à Service fait déclaré", value: "serviceDoneDeclared" },
+			{ name: "Passage à Service fait validé", value: "serviceDoneValidated" },
+			{ name: "Passage à Annulé (par le titulaire)", value: "canceledByAttendee" },
+			{ name: "Passage à Annulation titulaire (non réalisé)", value: "canceledByAttendeeNotRealized" },
+			{ name: "Passage à Annulé (par l'organisme)", value: "canceledByOrganism" },
+			{ name: "Passage à Annulé (par le financeur)", value: "canceledByFinancer" },
+			{ name: "Passage à Refus titulaire", value: "refusedByAttendee" },
+			{ name: "Passage à Refusé (par l'organisme)", value: "refusedByOrganism" },
+			{ name: "Passage à Refusé (par le financeur)", value: "refusedByFinancer" },
+			{ name: "Passage à Annulé sans suite", value: "rejectedWithoutTitulaireSuite" }
+		],
+		routing: {
+			send: {
+				type: 'query',
+				property: 'filterOnStateDate',
+				value : '={{ $value !== "" ? $value : undefined }}'
+			},
+		},
+		required: false,
+		default: 'stateLastUpdate',
 	},
 	{
 		displayName: 'Tri sur critère',
@@ -323,10 +417,10 @@ const getAllCFsWithQueries: INodeProperties[] = [
 			send: {
 				type: 'query',
 				property: 'cdcExcluded',
-				value : '={{ $value !== \'all\' ? $value : undefined }}'
+				value : '={{ $value !== "all" ? $value : undefined }}'
 			},
 		},
-		default: ['all'],
+		default: 'all',
 		description: 'Permet de filtrer les dossiers de certification qui sont exclus de l\'accrochage',
 	},
 	{
@@ -1483,7 +1577,7 @@ const updateCF: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['certificationFolders'],
-				operation: ['abort'],
+				operation: ['updateCF'],
 			},
 		},
 		routing: {
@@ -1501,7 +1595,7 @@ const updateCF: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['certificationFolders'],
-				operation: ['abort'],
+				operation: ['updateCF'],
 			},
 		},
 		routing: {
@@ -1519,7 +1613,7 @@ const updateCF: INodeProperties[] = [
 	displayOptions: {
 		show: {
 			resource: ['certificationFolders'],
-			operation: ['getAllCFsWithQueries'],
+			operation: ['updateCF'],
 		},
 	},
 	routing: {
@@ -1538,7 +1632,7 @@ const updateCF: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['certificationFolders'],
-				operation: ['control'],
+				operation: ['updateCF'],
 			},
 		},
 		routing: {
@@ -2249,9 +2343,9 @@ export const certificationFoldersOperations: INodeProperties[] = [
 				},
 			},
 			{
-				name: 'Rechercher un ou plusieurs dossier de certification',
+				name: 'Rechercher un ou plusieurs dossiers de certification',
 				value: 'getAllCFsWithQueries',
-				action: 'Rechercher un ou plusieurs dossier',
+				action: 'Rechercher un ou plusieurs dossiers',
 				routing: {
 					request: {
 						method: 'GET',

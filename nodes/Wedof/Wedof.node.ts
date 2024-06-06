@@ -1,7 +1,6 @@
-	import {INodePropertyOptions, INodeType, INodeTypeDescription} from 'n8n-workflow';
+	import {INodePropertyOptions, INodeType, INodeTypeDescription, ILoadOptionsFunctions} from 'n8n-workflow';
 	import {certificationFoldersOperations} from "./WedofCertificationFolders";
 	import {registrationFoldersOperations} from "./WedofRegistrationFolders";
-	import {ILoadOptionsFunctions} from "n8n-core";
 	import {wedofApiRequestAllItems} from "./GenericFunctions";
 	export class Wedof implements INodeType {
 		description: INodeTypeDescription = {

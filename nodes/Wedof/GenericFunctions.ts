@@ -5,9 +5,11 @@ import {
 	IWebhookFunctions,
 	JsonObject,
 	jsonParse,
-	NodeApiError
+	NodeApiError,
+	IExecuteFunctions,
+	ILoadOptionsFunctions,
+	IPollFunctions
 } from "n8n-workflow";
-import {IExecuteFunctions, ILoadOptionsFunctions, IPollFunctions} from "n8n-core";
 
 class IRequestOptions {
 }

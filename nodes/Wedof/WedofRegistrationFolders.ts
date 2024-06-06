@@ -304,7 +304,7 @@ const getAllRFWithQueries: INodeProperties[] = [
 	},
 	{
 		displayName: 'Période',
-		name: 'periodeRf',
+		name: 'periodRF',
 		type: 'options',
 		displayOptions: {
 			show: {
@@ -350,7 +350,7 @@ const getAllRFWithQueries: INodeProperties[] = [
 		type: "dateTime",
 		displayOptions: {
 			show: {
-				"periodeRf": ["custom"]
+				"periodRF": ["custom"]
 			}
 		},
 		routing: {
@@ -369,7 +369,7 @@ const getAllRFWithQueries: INodeProperties[] = [
 		type: "dateTime",
 		displayOptions: {
 			show: {
-				"periodeRf": ["custom"]
+				"periodRF": ["custom"]
 			}
 		},
 		routing: {
@@ -388,7 +388,7 @@ const getAllRFWithQueries: INodeProperties[] = [
 		type: "options",
 		displayOptions: {
 			show: {
-				"periodeRf": ["custom", "tomorrow", "today", "yesterday", "rollingWeek",
+				"periodRF": ["custom", "tomorrow", "today", "yesterday", "rollingWeek",
 					"rollingWeekFuture", "nextWeek", "previousWeek", "currentWeek", "rollingMonth",
 					"rollingMonthFuture", "nextMonth", "previousMonth", "currentMonth", "rollingYear",
 					"rollingYearFuture", "nextYear", "previousYear", "currentYear"
@@ -778,7 +778,7 @@ const serviceDone: INodeProperties[] = [
 		routing: {
 			send: {
 				type: 'body',
-				property: 'serviceDone',
+				property: 'code',
 			},
 		},
 		default: '',

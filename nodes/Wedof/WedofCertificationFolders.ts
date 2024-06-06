@@ -34,7 +34,7 @@ const getCFDocuments: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['certificationFolders'],
-				operation: ['getDocuments'],
+				operation: ['getCFDocuments'],
 			},
 		},
 		routing: {
@@ -49,7 +49,7 @@ const getCFDocuments: INodeProperties[] = [
 	}
 ];
 
-const getAllCFs: INodeProperties[] = [
+const getAllCF: INodeProperties[] = [
 	{
 		displayName: 'Limit',
 		name: 'limit',
@@ -190,7 +190,7 @@ const getAllCFsWithQueries: INodeProperties[] = [
 	},
 	{
 		displayName: 'Période',
-		name: 'periode',
+		name: 'periodCF',
 		type: 'options',
 		displayOptions: {
 			show: {
@@ -237,7 +237,7 @@ const getAllCFsWithQueries: INodeProperties[] = [
 		type: "dateTime",
 		displayOptions: {
 			show: {
-				"periode": ["custom"]
+				"periodCF": ["custom"]
 			}
 		},
 		routing: {
@@ -256,7 +256,7 @@ const getAllCFsWithQueries: INodeProperties[] = [
 		type: "dateTime",
 		displayOptions: {
 			show: {
-				"periode": ["custom"]
+				"periodCF": ["custom"]
 			}
 		},
 		routing: {
@@ -275,7 +275,7 @@ const getAllCFsWithQueries: INodeProperties[] = [
 		type: "options",
 		displayOptions: {
 			show: {
-				"periode": ["custom", "tomorrow", "today", "yesterday", "rollingWeek",
+				"periodCF": ["custom", "tomorrow", "today", "yesterday", "rollingWeek",
 					"rollingWeekFuture", "nextWeek", "previousWeek", "currentWeek", "rollingMonth",
 					"rollingMonthFuture", "nextMonth", "previousMonth", "currentMonth", "rollingYear",
 					"rollingYearFuture", "nextYear", "previousYear", "currentYear", "wedofInvoice"
@@ -1373,7 +1373,7 @@ const control: INodeProperties[] = [
 		routing: {
 			send: {
 				type: 'body',
-				property: 'control',
+				property: 'comment',
 			},
 		},
 		default: '',
@@ -1461,7 +1461,7 @@ const updateCF: INodeProperties[] = [
 		],
 		routing: {
 			send: {
-				type: 'query',
+				type: 'body',
 				property: 'type',
 				value: "={{$value.join(',')}}"
 			},
@@ -1589,9 +1589,10 @@ const updateCF: INodeProperties[] = [
 		default: '',
 	},
 	{
-		displayName: 'Commentaire',
+		displayName: 'Tags', // PROBLEM
 		name: 'tags',
-		type: 'string',
+		type: 'collection',
+		description : 'Liste de tags associée au dossier de certification',
 		displayOptions: {
 			show: {
 				resource: ['certificationFolders'],
@@ -1601,7 +1602,7 @@ const updateCF: INodeProperties[] = [
 		routing: {
 			send: {
 				type: 'body',
-				property: 'comment',
+				property: 'tags',
 			},
 		},
 		default: '',
@@ -1618,7 +1619,7 @@ const updateCF: INodeProperties[] = [
 	},
 	routing: {
 		send: {
-			type: 'query',
+			type: 'body',
 			property: 'cdcExcluded',
 		},
 	},
@@ -1626,7 +1627,7 @@ const updateCF: INodeProperties[] = [
 	description: 'Permet de filtrer les dossiers de certification qui sont exclus de l\'accrochage',
 },
 	{
-		displayName: 'Commentaire',
+		displayName: 'Prix HT',
 		name: 'amountHt',
 		type: 'number',
 		displayOptions: {
@@ -1635,10 +1636,11 @@ const updateCF: INodeProperties[] = [
 				operation: ['updateCF'],
 			},
 		},
+		description: 'Prix de vente du passage de la certification (Hors Taxe)',
 		routing: {
 			send: {
 				type: 'body',
-				property: 'control',
+				property: 'amountHt',
 			},
 		},
 		default: '',
@@ -2328,7 +2330,7 @@ export const certificationFoldersOperations: INodeProperties[] = [
 			},
 			{
 				name: 'Liste des documents d\'un dossier de certification',
-				value: 'getDocuments',
+				value: 'getCFDocuments',
 				action: 'La liste des documents renseignés et attendus pour un dossier'
 			},
 			{
@@ -2418,7 +2420,7 @@ export const certificationFoldersOperations: INodeProperties[] = [
 	},
 	...getCF,
 	...getCFDocuments,
-	...getAllCFs,
+	...getAllCF,
 	...getAllCFsWithQueries,
 	...getCFActivitiesTasks,
 	...updateCF,

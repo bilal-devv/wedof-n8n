@@ -1,9 +1,9 @@
 {
-	"node": "n8n-nodes-base.Wedof",
+	"node": "n8n-nodes-base.wedof",
 	"nodeVersion": "1.0",
 	"codexVersion": "1.0",
 	"categories": [
-		"Miscellaneous"
+		"Productivity"
 	],
 	"resources": {
 		"credentialDocumentation": [

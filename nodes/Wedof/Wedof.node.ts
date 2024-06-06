@@ -88,7 +88,7 @@
 					}
 					return returnData;
 				},
-				async usersOrganisms(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
+				async usersOrganism(this: ILoadOptionsFunctions): Promise<INodePropertyOptions[]> {
 					const returnData: INodePropertyOptions[] = [];
 					const datas = await wedofApiRequestAllItems.call(this, 'GET', '/users/me');
 					const users = await wedofApiRequestAllItems.call(this, 'GET', `/users?siret=${datas._links.mainOrganism.siret}`);

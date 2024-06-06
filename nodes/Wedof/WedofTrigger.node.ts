@@ -24,7 +24,6 @@ export class WedofTrigger implements INodeType {
 		group: ['trigger'],
 		icon: 'file:wedof.svg',
 		inputs: [],
-		// keep sendinblue name for backward compatibility
 		name: 'wedofTrigger',
 		outputs: ['main'],
 		version: 1,
@@ -39,11 +38,11 @@ export class WedofTrigger implements INodeType {
 		properties: [
 			{
 				displayName: 'Resource',
-				default: 'certification',
+				default: 'certificationFolder',
 				name: 'type',
 				options: [
-					{ name: 'formation', value: 'formation' },
-					{ name: 'certification', value: 'certification' },
+					{ name: 'Dossier de formation', value: 'registrationFolder' },
+					{ name: 'Dossier de certification', value: 'certificationFolder' },
 				],
 				required: true,
 				type: 'options',
@@ -52,22 +51,24 @@ export class WedofTrigger implements INodeType {
 				displayName: 'Trigger',
 				displayOptions: {
 					show: {
-						type: ['certification'],
+						type: ['certificationFolder'],
 					},
 				},
 				name: 'events',
-				placeholder: 'Add Event',
+				placeholder: 'Sélectionnez un trigger',
 				options: [
-					{
-						name: 'Dossier de certification à contrôler',
-						value: 'certificationFolder.toControl',
-						description: 'Dossier de certification à contrôler',
-					},
-					{
-						name: 'Dossier de certification actualisé/mis à jour',
-						value: 'certificationFolder.updated',
-						description: 'Dossier de certification actualisé/mis à jour',
-					},
+					{name: "Création d'un dossier", value: "certificationFolder.created"},
+					{name: "Mise à jour du dossier", value: "certificationFolder.updated"},
+					{name: "Accrochage réussi", value: "certificationFolder.accrochageOk"},
+					{name: "Accrochage en erreur", value: "certificationFolder.accrochageKo"},
+					{name: "À enregistrer", value: "certificationFolder.toRegister"},
+					{name: "Enregistré", value: "certificationFolder.registered"},
+					{name: "Prêt à passer", value: "certificationFolder.toTake"},
+					{name: "À contrôler", value: "certificationFolder.toControl"},
+					{name: "Réussi", value: "certificationFolder.success"},
+					{name: "Refusé", value: "certificationFolder.refused"},
+					{name: "Échoué", value: "certificationFolder.failed"},
+					{name: "Abandonné", value: "certificationFolder.aborted"}
 				],
 				default: [],
 				required: true,
@@ -77,17 +78,30 @@ export class WedofTrigger implements INodeType {
 				displayName: 'Trigger',
 				displayOptions: {
 					show: {
-						type: ['formation'],
+						type: ['registrationFolder'],
 					},
 				},
 				name: 'events',
-				placeholder: 'Add Event',
+				placeholder: 'Sélectionnez un trigger',
 				options: [
-					{
-						name: 'Dossier de formation actualisé/mis à jour',
-						value: 'registrationFolder.updated',
-						description: 'Dossier de formation actualisé/mis à jour',
-					},
+					{name: "Création d'un dossier", value: "registrationFolder.created"},
+					{name: "Mise à jour d'un dossier", value: "registrationFolder.updated"},
+					{name: "Annulé (par le titulaire)", value: "registrationFolder.canceledByAttendee"},
+					{name: "Annulation titulaire (non réalisé)", value: "registrationFolder.canceledByAttendeeNotRealized"},
+					{name: "Annulé (par l'organisme)", value: "registrationFolder.canceledByOrganism"},
+					{name: "Annulé (par le financeur)", value: "registrationFolder.canceledByFinancer"},
+					{name: "Refus titulaire", value: "registrationFolder.refusedByAttendee"},
+					{name: "Refusé (par l'organisme)", value: "registrationFolder.refusedByOrganism"},
+					{name: "Refusé (par le financeur)", value: "registrationFolder.refusedByFinancer"},
+					{name: "Annulé sans suite", value: "registrationFolder.rejectedWithoutTitulaireSuite"},
+					{name: "Non traité", value: "registrationFolder.notProcessed"},
+					{name: "Validé", value: "registrationFolder.validated"},
+					{name: "Validé (En cours d'instruction Pôle emploi)", value: "registrationFolder.waitingAcceptation"},
+					{name: "Accepté", value: "registrationFolder.accepted"},
+					{name: "En formation", value: "registrationFolder.inTraining"},
+					{name: "Sortie de formation", value: "registrationFolder.terminated"},
+					{name: "Service fait déclaré", value: "registrationFolder.serviceDone"},
+					{name: "Service fait validé", value: "registrationFolder.serviceDoneDeclared"}
 				],
 				default: [],
 				required: true,

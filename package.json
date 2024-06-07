@@ -1,7 +1,7 @@
 {
-  "name": "n8n-nodes-nasapics",
+  "name": "n8n-nodes-wedof",
   "version": "0.1.0",
-  "description": "n8n node to call NASA's APOD and Mars Rover Photo services.",
+  "description": "n8n node to call Wedof services.",
   "keywords": [
     "n8n-community-node-package"
   ],
@@ -30,10 +30,10 @@
   "n8n": {
     "n8nNodesApiVersion": 1,
     "credentials": [
-      "dist/credentials/NasaPicsApi.credentials.js"
+      "dist/credentials/WedofApi.credentials.js"
     ],
     "nodes": [
-      "dist/nodes/NasaPics/NasaPics.node.js"
+      "dist/nodes/Wedof/Wedof.node.js"
     ]
   },
   "devDependencies": {

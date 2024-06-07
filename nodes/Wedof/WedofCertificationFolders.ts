@@ -2439,12 +2439,12 @@ export const certificationFoldersOperations: INodeProperties[] = [
 				},
 			},
 			{
-				name: 'Liste de toutes les activités et tâches d\'un dossier de certification',
+				name: 'Liste de toutes les activités et tâches d\'un dossier',
 				value: 'getCFActivitiesTasks',
 				action: 'Liste de toutes les activités et tâches d\'un dossier',
 			},
 			{
-				name: 'Mettre à jour un dossier de certification',
+				name: 'Mettre à jour un dossier',
 				value: 'updateCF',
 				action: 'Mettre à un jour un dossier'
 			},
@@ -2484,22 +2484,22 @@ export const certificationFoldersOperations: INodeProperties[] = [
 				action: 'Change l\'état d\'un dossier vers : à contrôler'
 			},
 			{
-				name: 'Passer un dossier de certification à l’état : abandonné',
+				name: 'Passer un dossier à l’état : abandonné',
 				value: 'abort',
 				action: 'Change l\'état d\'un dossier vers : abandonné'
 			},
 			{
-				name: 'Créer une tâche pour un dossier de certification',
+				name: 'Créer une tâche pour un dossier',
 				value: 'postTaskCF',
 				action: 'Créer une tâche pour un dossier'
 			},
 			{
-				name: 'Créer une activité pour un dossier de certification',
+				name: 'Créer une activité pour un dossier',
 				value: 'postActivityCF',
 				action: 'Créer une activité pour un dossier'
 			},
 			{
-				name: 'Créer une activité pour un dossier de certification',
+				name: 'Créer une activité pour un dossier',
 				value: 'postActivityCF',
 				action: 'Créer une activité pour un dossier'
 			},

@@ -1817,7 +1817,7 @@ const sendRFFiles: INodeProperties[] = [
 		routing: {
 			request: {
 				method: 'GET',
-				url: '=/certificationFolders/{{$value}}/files',
+				url: '=/registrationFolders/{{$value}}/files',
 			},
 		},
 		required: true,
@@ -1899,17 +1899,17 @@ export const registrationFoldersOperations: INodeProperties[] = [
 		},
 		options: [
 			{
-				name: 'Récupérer un dossier de formation',
+				name: 'Récupérer un dossier',
 				value: 'getRF',
 				action: 'Récupérer un dossier',
 			},
 			{
-				name: 'Liste des documents d\'un dossier de formation',
+				name: 'Liste des documents d\'un dossier',
 				value: 'getRFDocuments',
 				action: 'La liste des documents renseignés et attendus pour un dossier'
 			},
 			{
-				name: 'Liste des dossiers de formation',
+				name: 'Liste des dossiers',
 				value: 'getAllRF',
 				action: 'Liste des dossiers de mon l\'organisme\n',
 				routing: {
@@ -1920,7 +1920,7 @@ export const registrationFoldersOperations: INodeProperties[] = [
 				},
 			},
 			{
-				name: 'Rechercher un ou plusieurs dossiers de formation',
+				name: 'Rechercher un ou plusieurs dossiers',
 				value: 'getAllRFWithQueries',
 				action: 'Rechercher un ou plusieurs dossiers',
 				routing: {
@@ -1931,12 +1931,12 @@ export const registrationFoldersOperations: INodeProperties[] = [
 				},
 			},
 			{
-				name: 'Liste de toutes les activités et tâches d\'un dossier de formation',
+				name: 'Liste de toutes les activités et tâches d\'un dossier',
 				value: 'getRFActivitiesTasks',
 				action: 'Récupère l\'ensemble des activités et tâches liées à un dossier'
 			},
 			{
-				name: 'Mettre à jour un dossier de formation',
+				name: 'Mettre à jour un dossier',
 				value: 'updateRF',
 				action: 'Mettre à un jour un dossier'
 			},
@@ -1976,17 +1976,17 @@ export const registrationFoldersOperations: INodeProperties[] = [
 				action: 'Change l\'état d\'un dossier vers : à contrôler'
 			},
 			{
-				name: 'Passer un dossier de formation à l’état : abandonné',
+				name: 'Passer un dossier à l’état : abandonné',
 				value: 'abort',
 				action: 'Change l\'état d\'un dossier vers : abandonné'
 			},
 			{
-				name: 'Créer une tâche pour un dossier de formation',
+				name: 'Créer une tâche pour un dossier',
 				value: 'postTaskRF',
 				action: 'Créer une tâche pour un dossier'
 			},
 			{
-				name: 'Créer une activité pour un dossier de formation',
+				name: 'Créer une activité pour un dossier',
 				value: 'postActivityRF',
 				action: 'Créer une activité pour un dossier'
 			},

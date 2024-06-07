@@ -26,7 +26,7 @@ const getCF: INodeProperties[] = [
 	}
 ];
 
-const getCFDocuments: INodeProperties[] = [
+const getCFFiles: INodeProperties[] = [
 	{
 		displayName: 'Numéro du dossier de certification',
 		name: 'identifier',
@@ -34,7 +34,7 @@ const getCFDocuments: INodeProperties[] = [
 		displayOptions: {
 			show: {
 				resource: ['certificationFolders'],
-				operation: ['getCFDocuments'],
+				operation: ['getCFFiles'],
 			},
 		},
 		routing: {
@@ -2309,6 +2309,89 @@ const postActivityCF: INodeProperties[] = [
 	},
 ]
 
+const sendCFFiles: INodeProperties[] = [
+	{
+		displayName: 'Numéro du dossier de certification',
+		name: 'identifier',
+		type: 'string',
+		displayOptions: {
+			show: {
+				resource: ['certificationFolders'],
+				operation: ['sendCFFiles'],
+			},
+		},
+		routing: {
+			request: {
+				method: 'GET',
+				url: '=/certificationFolders/{{$value}}/files',
+			},
+		},
+		required: true,
+		default: '',
+		description: 'Le numéro du dossier est l\'id',
+	},
+	{
+		displayName: 'Titre',
+		name: 'title',
+		type: 'string',
+		displayOptions: {
+			show: {
+				resource: ['certificationFolders'],
+				operation: ['sendCFFiles'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'title',
+			},
+		},
+		required: true,
+		default: '',
+	},
+	{
+		displayName: 'Type du fichier',
+		name: 'typeId',
+		type: 'string',
+		description: "C'est le typeId du fichier que vous souhaitez upload",
+		displayOptions: {
+			show: {
+				resource: ['certificationFolders'],
+				operation: ['sendCFFiles'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'typeId',
+			},
+		},
+		required: true,
+		default: '',
+	},
+	{
+		displayName: 'Fichier',
+		name: 'file',
+		type: 'string',
+		description: 'Binary du fichier attendu',
+		displayOptions: {
+			show: {
+				resource: ['certificationFolders'],
+				operation: ['sendCFFiles'],
+			},
+		},
+		routing: {
+			send: {
+				type: 'body',
+				property: 'file',
+			},
+		},
+		required: true,
+		default: '',
+	}
+];
+
+
 export const certificationFoldersOperations: INodeProperties[] = [
 	{
 		displayName: 'Operation',
@@ -2330,7 +2413,7 @@ export const certificationFoldersOperations: INodeProperties[] = [
 			},
 			{
 				name: 'Liste des documents d\'un dossier de certification',
-				value: 'getCFDocuments',
+				value: 'getCFFiles',
 				action: 'La liste des documents renseignés et attendus pour un dossier'
 			},
 			{
@@ -2415,11 +2498,21 @@ export const certificationFoldersOperations: INodeProperties[] = [
 				value: 'postActivityCF',
 				action: 'Créer une activité pour un dossier'
 			},
+			{
+				name: 'Créer une activité pour un dossier de certification',
+				value: 'postActivityCF',
+				action: 'Créer une activité pour un dossier'
+			},
+			{
+				name: 'Envoyer un fichier',
+				value: 'sendCFFiles',
+				action: 'Envoyer un fichier',
+			},
 		],
 		default: 'getCF',
 	},
 	...getCF,
-	...getCFDocuments,
+	...getCFFiles,
 	...getAllCF,
 	...getAllCFsWithQueries,
 	...getCFActivitiesTasks,
@@ -2434,5 +2527,6 @@ export const certificationFoldersOperations: INodeProperties[] = [
 	...abort,
 	...postTaskCF,
 	...postActivityCF,
+	...sendCFFiles
 ]
 
